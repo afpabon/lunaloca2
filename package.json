@@ -5,20 +5,28 @@
   "main": "server.js",
   "scripts": {
     "start": "node server",
-    "server": "nodemon server"
+    "server": "nodemon --exec babel-node server"
   },
   "author": "Andres Pabon",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "bootstrap": "^4.4.1",
     "config": "^3.3.1",
+    "crypto": "^1.0.1",
     "express": "^4.17.1",
+    "express-jwt": "^5.3.3",
     "express-validator": "^6.4.0",
     "gravatar": "^1.8.0",
-    "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.9.10"
+    "mongoose": "^5.9.10",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0"
   },
   "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.0",
+    "@babel/node": "^7.8.7",
+    "@babel/preset-env": "^7.9.5",
     "concurrently": "^5.1.0",
     "nodemon": "^2.0.3"
   }

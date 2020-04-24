@@ -1,0 +1,4 @@
+{
+  "mongoURI": "mongodb+srv://admin:Lun4L0c4@lunaloca-dqurz.gcp.mongodb.net/test?retryWrites=true&w=majority",
+  "jwtSecret": "bartolo"
+}
