@@ -1,5 +1,5 @@
-import jwt from 'express-jwt';
-import config from 'config';
+const jwt = require('express-jwt');
+const config = require('config');
 
 const auth = (req, res, next) => {
   // Get token from header
@@ -21,4 +21,4 @@ const auth = (req, res, next) => {
   }
 };
 
-export default auth;
+module.exports = auth;

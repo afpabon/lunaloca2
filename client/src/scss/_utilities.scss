@@ -1,0 +1,87 @@
+// Text styles
+.x-large {
+  font-size: 4rem;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
+.large {
+  font-size: 3rem;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
+.lead {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+// Backgrounds
+.bg {
+  &-main {
+    @include set-background($main-color);
+  }
+  &-highlight {
+    @include set-background($highlight-color);
+  }
+  &-noteworthy {
+    @include set-background($noteworthy-color);
+  }
+  &-light {
+    @include set-background($light-color);
+    border: $light-color 1px solid;
+  }
+}
+
+// Text
+.text {
+  &-main {
+    color: $main-color;
+  }
+  &-highlight {
+    color: $highlight-color;
+  }
+}
+
+// Buttons
+.btn {
+  display: inline-block;
+  background: $light-color;
+  color: #333;
+  transition: all 0.3s ease;
+
+  &.btn-main {
+    @include set-background($main-color);
+    &:hover {
+      background: lighten($main-color, 5%);
+    }
+  }
+
+  &.btn-highlight {
+    @include set-background($highlight-color);
+    &:hover {
+      background: lighten($highlight-color, 5%);
+    }
+  }
+
+  &.btn-noteworthy {
+    @include set-background($noteworthy-color);
+    &:hover {
+      background: lighten($noteworthy-color, 5%);
+    }
+  }
+
+  &:hover {
+    background-color: lighten($main-color, 20%);
+    color: $light-color;
+  }
+}
+
+.dark-overlay {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+}

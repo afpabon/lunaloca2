@@ -1,0 +1,22 @@
+// The real ones
+$main-color: #3a1901;
+$highlight-color: #f43075;
+$noteworthy-color: #a3a510;
+$light-color: #fff;
+$selection-color: #f78a24;
+$envelope-color: #ccc;
+
+// Set text color based on background
+@function set-text-color($color) {
+  @if (lightness($color) > 60) {
+    @return $main-color;
+  } @else {
+    @return $light-color;
+  }
+}
+
+// Set background & text color
+@mixin set-background($color) {
+  background-color: $color;
+  color: set-text-color($color);
+}

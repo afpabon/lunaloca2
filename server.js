@@ -1,13 +1,12 @@
-import express from 'express';
-import passport from 'passport';
-import { Strategy as LocalStrategy } from 'passport-local';
+const express = require('express');
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
 
 // Load models
-import * as userModel from './models/User';
+const User = require('./models/User');
 
-import connectDB from './config/db';
-
-import router from './routes/api';
+const connectDB = require('./config/db');
+const router = require('./routes/api');
 
 // Initialize express
 const app = express();

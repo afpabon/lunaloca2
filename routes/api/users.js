@@ -1,8 +1,8 @@
-import mongoose from 'mongoose';
-import passport from 'passport';
-import express from 'express';
-import { check, validationResult } from 'express-validator';
-import auth from './auth';
+const mongoose = require('mongoose');
+const passport = require('passport');
+const express = require('express');
+const { check, validationResult } = require('express-validator');
+const auth = require('./auth');
 
 const User = mongoose.model('user');
 const usersRouter = express.Router();
@@ -113,4 +113,4 @@ usersRouter.get('/current', auth.required, (req, res, next) => {
   });
 });
 
-export default usersRouter;
+module.exports = usersRouter;

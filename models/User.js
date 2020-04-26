@@ -1,7 +1,7 @@
-import mongoose from 'mongoose';
-import crypto from 'crypto';
-import jwt from 'jsonwebtoken';
-import config from 'config';
+const mongoose = require('mongoose');
+const crypto = require('crypto');
+const jwt = require('jsonwebtoken');
+const config = require('config');
 
 const { Schema } = mongoose;
 
@@ -52,4 +52,5 @@ UserSchema.methods.toAuthJSON = function() {
   };
 };
 
-mongoose.model('user', UserSchema);
+const User = mongoose.model('user', UserSchema);
+module.exports = User;
