@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-//import { useParams } from 'react-router-dom';
+import React from 'react';
+import { useParams } from 'react-router-dom';
+import { GALLERY_GROUP } from '../../constants/enums';
 
 const Gallery = () => {
-  const [test, setTest] = useState(null);
-  //return <div>{`Gallery ${id}`}</div>;
-  return <div>Gallery</div>;
+  const { id } = useParams();
+  return <div>{`Gallery ${id}`}</div>;
 };
 
 export default Gallery;

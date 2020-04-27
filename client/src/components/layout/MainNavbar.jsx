@@ -1,6 +1,7 @@
 import React from 'react';
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { GALLERY_GROUP } from '../../constants/enums';
 
 const MainNavbar = () => {
   return (
@@ -43,13 +44,22 @@ const MainNavbar = () => {
             id='gallery_toggle'
             as='li'
           >
-            <Link to='/gallery/cupcakes' className='dropdown-item'>
+            <Link
+              to={`/gallery/${GALLERY_GROUP.CUPCAKES}`}
+              className='dropdown-item'
+            >
               Cupcakes
             </Link>
-            <Link to='/gallery/cakes' className='dropdown-item'>
+            <Link
+              to={`/gallery/${GALLERY_GROUP.CAKES}`}
+              className='dropdown-item'
+            >
               Tortas
             </Link>
-            <Link to='/gallery/others' className='dropdown-item'>
+            <Link
+              to={`/gallery/${GALLERY_GROUP.OTHERS}`}
+              className='dropdown-item'
+            >
               Otros
             </Link>
           </NavDropdown>
