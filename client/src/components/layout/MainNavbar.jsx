@@ -1,5 +1,6 @@
 import React from 'react';
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 const MainNavbar = () => {
   return (
@@ -7,7 +8,9 @@ const MainNavbar = () => {
       <Navbar.Collapse id='navbarText'>
         <Nav className='nav-fill w-100' as='ul'>
           <Nav.Item as='li'>
-            <Nav.Link href='index.html'>Inicio</Nav.Link>
+            <Link to='/main' className='nav-link'>
+              Inicio
+            </Link>
           </Nav.Item>
           <NavDropdown
             className='nav-dropdown'
@@ -15,20 +18,24 @@ const MainNavbar = () => {
             id='products_toggle'
             as='li'
           >
-            <NavDropdown.Item href='products/cupcakes.html'>
+            <Link to='/products/cupcakes' className='dropdown-item'>
               Cupcakes
-            </NavDropdown.Item>
-            <NavDropdown.Item href='products/cakes.html'>
+            </Link>
+            <Link to='/products/cakes' className='dropdown-item'>
               Tortas
-            </NavDropdown.Item>
-            <NavDropdown.Item href='products/cookies.html'>
+            </Link>
+            <Link to='/products/cookies' className='dropdown-item'>
               Galletas
-            </NavDropdown.Item>
-            <NavDropdown.Item href='products/pies.html'>Pies</NavDropdown.Item>
-            <NavDropdown.Item href='products/pops.html'>Pops</NavDropdown.Item>
-            <NavDropdown.Item href='products/others.html'>
+            </Link>
+            <Link to='/products/pies' className='dropdown-item'>
+              Pies
+            </Link>
+            <Link to='/products/pops' className='dropdown-item'>
+              Pops
+            </Link>
+            <Link to='/products/others' className='dropdown-item'>
               Otros
-            </NavDropdown.Item>
+            </Link>
           </NavDropdown>
           <NavDropdown
             className='nav-dropdown'
@@ -36,131 +43,30 @@ const MainNavbar = () => {
             id='gallery_toggle'
             as='li'
           >
-            <NavDropdown.Item href='gallery/cupcakes.html'>
+            <Link to='/gallery/cupcakes' className='dropdown-item'>
               Cupcakes
-            </NavDropdown.Item>
-            <NavDropdown.Item href='gallery/cakes.html'>
+            </Link>
+            <Link to='/gallery/cakes' className='dropdown-item'>
               Tortas
-            </NavDropdown.Item>
-            <NavDropdown.Item href='gallery/others.html'>
+            </Link>
+            <Link to='/gallery/others' className='dropdown-item'>
               Otros
-            </NavDropdown.Item>
+            </Link>
           </NavDropdown>
           <Nav.Item as='li'>
-            <Nav.Link href='contact.html'>Contacto</Nav.Link>
+            <Link to='/contact' className='nav-link'>
+              Contacto
+            </Link>
           </Nav.Item>
           <Nav.Item as='li'>
-            <Nav.Link href='about.html'>Acerca de nosotros</Nav.Link>
+            <Link to='/about' className='nav-link'>
+              Acerca de nosotros
+            </Link>
           </Nav.Item>
         </Nav>
       </Navbar.Collapse>
     </Navbar>
   );
 };
-
-/*
-
-    <nav className='navbar navbar-expand-lg navbar-main bg-main'>
-      <div className='collapse navbar-collapse' id='navbarText'>
-        <ul className='navbar-nav nav-fill w-100'>
-          <li className='nav-item active'>
-            <a className='nav-link' href='index.html'>
-              Inicio
-            </a>
-          </li>
-          <li className='nav-item dropdown'>
-            <a
-              href={null}
-              className='nav-link dropdown-toggle'
-              data-toggle='dropdown'
-              aria-haspopup='true'
-              aria-expanded='false'
-              id='products_toggle'
-            >
-              Productos
-            </a>
-            <ul
-              className='dropdown-menu dropdown-main'
-              aria-labelledby='products_toggle'
-            >
-              <li className='nav-item'>
-                <a className='nav-link' href='products/cupcakes.html'>
-                  Cupcakes
-                </a>
-              </li>
-              <li className='nav-item'>
-                <a className='nav-link' href='products/cakes.html'>
-                  Tortas
-                </a>
-              </li>
-              <li className='nav-item'>
-                <a className='nav-link' href='products/cookies.html'>
-                  Galletas
-                </a>
-              </li>
-              <li className='nav-item'>
-                <a className='nav-link' href='products/pies.html'>
-                  Pies
-                </a>
-              </li>
-              <li className='nav-item'>
-                <a className='nav-link' href='products/pops.html'>
-                  Pops
-                </a>
-              </li>
-              <li className='nav-item'>
-                <a className='nav-link' href='products/others.html'>
-                  Otros
-                </a>
-              </li>
-            </ul>
-          </li>
-          <li className='nav-item dropdown'>
-            <a
-              href={null}
-              className='nav-link dropdown-toggle'
-              data-toggle='dropdown'
-              aria-haspopup='true'
-              aria-expanded='false'
-              id='gallery_toggle'
-            >
-              Galería
-            </a>
-            <ul
-              className='dropdown-menu dropdown-main'
-              aria-labelledby='gallery_toggle'
-            >
-              <li className='nav-item'>
-                <a className='nav-link' href='gallery/cupcakes.html'>
-                  Cupcakes
-                </a>
-              </li>
-              <li className='nav-item'>
-                <a className='nav-link' href='gallery/cakes.html'>
-                  Tortas
-                </a>
-              </li>
-              <li className='nav-item'>
-                <a className='nav-link' href='gallery/others.html'>
-                  Otros
-                </a>
-              </li>
-            </ul>
-          </li>
-          <li className='nav-item'>
-            <a className='nav-link' href='contact.html'>
-              Contacto
-            </a>
-          </li>
-          <li className='nav-item'>
-            <a className='nav-link' href='about.html'>
-              Acerca de nosotros
-            </a>
-          </li>
-        </ul>
-      </div>
-    </nav>
-
-*/
 
 export default MainNavbar;
