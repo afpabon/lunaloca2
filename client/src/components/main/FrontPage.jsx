@@ -1,6 +1,6 @@
 import React from 'react';
-import imgTopLeft from '../../img/gallery/2524a6_705b2092b4b34d348ce6b0855313ae0d.jpg';
 import imgBottomLeft from '../../img/gallery/2524a6_c64aba0c6e79428189cb4567f4f25a74.jpg';
+import RemoteImage from '../layout/RemoteImage';
 
 const FrontPage = () => {
   return (
@@ -8,7 +8,7 @@ const FrontPage = () => {
       <div className='col-md-12 bg-light'>
         <div className='row m-2'>
           <div className='col-lg-4 col-md-6 col-sm-12'>
-            <img src={imgTopLeft} className='container-fluid' alt='Tortas' />
+            <RemoteImage img='v1588026801/2524a6_705b2092b4b34d348ce6b0855313ae0d_hrvpld.jpg' />
           </div>
           <div className='col-lg-4 col-md-6 col-sm-12'>
             <h1 className='text-highlight title-text'>

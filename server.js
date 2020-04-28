@@ -1,44 +1,33 @@
 const express = require('express');
-const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
-
-// Load models
-const User = require('./models/User');
-
 const connectDB = require('./config/db');
-const router = require('./routes/api');
+const { cloudinaryConfig } = require('./config/cloudinary');
+const path = require('path');
 
-// Initialize express
 const app = express();
 
-// Initialize passport
-passport.use(
-  new LocalStrategy((username, password, done) => {
-    User.findOne({ username: username }, (err, user) => {
-      if (err) {
-        return done(err);
-      }
-      if (!user) {
-        return done(null, false, { message: 'Incorrect username.' });
-      }
-      if (!user.validPassword(password)) {
-        return done(null, false, { message: 'Incorrect password.' });
-      }
-      return done(null, user);
-    });
-  }),
-);
-
-// Connect DB
+// Connect Database
 connectDB();
 
 // Init Middleware
-app.use(express.json({ extended: false }));
+app.use(express.json());
 
-app.get('/', (req, res) => res.send('API Running'));
+// Init Cloudinary
+cloudinaryConfig();
 
-// Init router
-app.use('/api', router);
+// Define Routes
+app.use('/api/users', require('./routes/api/users'));
+app.use('/api/auth', require('./routes/api/auth'));
+app.use('/api/photos', require('./routes/api/photos'));
+
+// Serve static assets in production
+if (process.env.NODE_ENV === 'production') {
+  // Set static folder
+  app.use(express.static('client/build'));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  });
+}
 
 const PORT = process.env.PORT || 5000;
 
