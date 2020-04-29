@@ -10,6 +10,7 @@ import {
 import Header from './components/layout/Header';
 import MainNavbar from './components/layout/MainNavbar';
 import Footer from './components/layout/Footer';
+import EnlargedImageModal from './components/layout/EnlargedImageModal';
 
 // Pages
 import FrontPage from './components/main/FrontPage';
@@ -32,11 +33,12 @@ import './css/style.min.css';
 
 const App = () => (
   <Provider store={store}>
+    <EnlargedImageModal />
     <Router>
       <Redirect exact from='/' to='main' />
-      <div class='main-container'>
+      <div className='main-container'>
         <Header />
-        <div class='content'>
+        <div className='content'>
           <MainNavbar />
           <Switch>
             <Route exact path='/main' component={FrontPage} />

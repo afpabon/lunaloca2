@@ -1,7 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import lunaloca from '../../img/lunaloca.png';
+import Carousel from './Carousel';
 
-const Header = () => {
+import { getMainCarouselImages } from '../../actions/carousel';
+
+const Header = ({ getMainCarouselImages, mainCarouselImages }) => {
+  useEffect(() => {
+    getMainCarouselImages();
+  }, [getMainCarouselImages]);
   return (
     <>
       <header>
@@ -24,15 +32,35 @@ const Header = () => {
           </div>
         </div>
       </header>
-      <div
-        className='col-md-12 tuck-under-title'
-        style={{
-          height: '245px',
-          backgroundColor: 'red',
-        }}
-      ></div>
+      <div className='col-md-12 tuck-under-title'>
+        <Carousel
+          images={mainCarouselImages}
+          lazy
+          autoplay
+          showDots={false}
+          showArrows={false}
+          maxHeight={245}
+          maxWidth={245}
+        />
+      </div>
     </>
   );
 };
 
-export default Header;
+Header.propTypes = {
+  mainCarouselImages: PropTypes.array,
+  getMainCarouselImages: PropTypes.func.isRequired,
+};
+
+Header.defaultProps = {
+  mainCarouselImages: [],
+};
+
+const mapStateToProps = state => ({
+  mainCarouselImages: state.carousel.mainCarousel,
+});
+
+export default connect(
+  mapStateToProps,
+  { getMainCarouselImages },
+)(Header);
