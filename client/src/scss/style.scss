@@ -30,6 +30,14 @@ a {
   }
 }
 
+a.dark {
+  color: $main-color;
+  transition: all 0.1s ease-in;
+  &:hover {
+    color: lighten($main-color, 30%);
+  }
+}
+
 ul {
   list-style: none;
 }
@@ -107,7 +115,6 @@ ul {
 }
 
 .highlighted-box {
-  text-align: center;
   background-color: $highlight-color;
   padding: 0.5em;
   color: white;
@@ -117,6 +124,11 @@ ul {
       color: $light-color;
     }
   }
+}
+
+.highlighted2-box {
+  background-color: $highlight2-color;
+  padding: 0.1em 0;
 }
 
 .box {
@@ -163,8 +175,18 @@ ul {
 }
 
 .products-background {
-  background-image: url('../img/products.jpg');
-  background-repeat: no-repeat;
+  background-image: url('https://res.cloudinary.com/lunaloca/image/upload/v1588170212/2524a6_2a32ddd9154f4f8389b8d7939e1edd93_amud9k.jpg');
+  background-repeat: no-repeat fixed center;
+}
+
+.bordered-container {
+  border: 2px solid $highlight-color;
+  padding: 1em;
+}
+
+.underlined-title {
+  border-bottom: 1px solid $highlight-color;
+  width: 100%;
 }
 
 .carousel-container {

@@ -65,7 +65,7 @@ const EnlargedImageModal = ({ image, resetCurrentEnlargedImage }) => {
 
 EnlargedImageModal.propTypes = {
   image: PropTypes.object,
-  getMainCarouselImages: PropTypes.func.isRequired,
+  resetCurrentEnlargedImage: PropTypes.func.isRequired,
 };
 
 EnlargedImageModal.defaultProps = {

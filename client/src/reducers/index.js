@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
 import carousel from './carousel';
+import loadingStatus from './loadingStatus';
 
-export default combineReducers({ carousel });
+export default combineReducers({ carousel, loadingStatus });

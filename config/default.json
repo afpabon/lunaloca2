@@ -3,5 +3,8 @@
   "jwtSecret": "bartolo",
   "cloudinaryCloudName": "lunaloca",
   "cloudinaryApiKey": "613652533621734",
-  "cloudinarySecret": "ahdH70IdYfJyMKhhYUlPqMV-YzI"
+  "cloudinarySecret": "ahdH70IdYfJyMKhhYUlPqMV-YzI",
+  "emailService": "gmail",
+  "emailUser": "afpabon@gmail.com",
+  "emailPassword": "T0m4$..2008"
 }

@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom';
 
 // Layout
+import MainLoadingOverlay from './components/layout/MainLoadingOverlay';
 import Header from './components/layout/Header';
 import MainNavbar from './components/layout/MainNavbar';
 import Footer from './components/layout/Footer';
@@ -14,12 +15,16 @@ import EnlargedImageModal from './components/layout/EnlargedImageModal';
 
 // Pages
 import FrontPage from './components/main/FrontPage';
+import Products from './components/products/Products';
 import Cupcakes from './components/products/Cupcakes';
 import Cakes from './components/products/Cakes';
 import Cookies from './components/products/Cookies';
 import Pies from './components/products/Pies';
 import Pops from './components/products/Pops';
 import Others from './components/products/Others';
+import Fondant from './components/glossary/Fondant';
+import Ganache from './components/glossary/Ganache';
+import Glase from './components/glossary/Glase';
 import Gallery from './components/gallery/Gallery';
 import ContactUs from './components/contact/ContactUs';
 import AboutUs from './components/about/AboutUs';
@@ -33,29 +38,34 @@ import './css/style.min.css';
 
 const App = () => (
   <Provider store={store}>
-    <EnlargedImageModal />
-    <Router>
-      <Redirect exact from='/' to='main' />
-      <div className='main-container'>
-        <Header />
-        <div className='content'>
-          <MainNavbar />
-          <Switch>
-            <Route exact path='/main' component={FrontPage} />
-            <Route exact path='/products/cupcakes' component={Cupcakes} />
-            <Route exact path='/products/cakes' component={Cakes} />
-            <Route exact path='/products/pies' component={Pies} />
-            <Route exact path='/products/cookies' component={Cookies} />
-            <Route exact path='/products/pops' component={Pops} />
-            <Route exact path='/products/others' component={Others} />
-            <Route path='/gallery/:id' component={Gallery} />
-            <Route exact path='/contact' component={ContactUs} />
-            <Route exact path='/about' component={AboutUs} />
-          </Switch>
+    <MainLoadingOverlay>
+      <EnlargedImageModal />
+      <Router>
+        <div className='main-container'>
+          <Header />
+          <div className='content'>
+            <MainNavbar />
+            <Switch>
+              <Route exact path='/main' component={FrontPage} />
+              <Route exact path='/products' component={Products} />
+              <Route exact path='/products/cupcakes' component={Cupcakes} />
+              <Route exact path='/products/cakes' component={Cakes} />
+              <Route exact path='/products/pies' component={Pies} />
+              <Route exact path='/products/cookies' component={Cookies} />
+              <Route exact path='/products/pops' component={Pops} />
+              <Route exact path='/products/others' component={Others} />
+              <Route exact path='/glossary/fondant' component={Fondant} />
+              <Route exact path='/glossary/ganache' component={Ganache} />
+              <Route exact path='/glossary/glase' component={Glase} />
+              <Route path='/gallery/:id' component={Gallery} />
+              <Route exact path='/contact' component={ContactUs} />
+              <Route exact path='/about' component={AboutUs} />
+            </Switch>
+          </div>
+          <Footer />
         </div>
-        <Footer />
-      </div>
-    </Router>
+      </Router>
+    </MainLoadingOverlay>
   </Provider>
 );
 
