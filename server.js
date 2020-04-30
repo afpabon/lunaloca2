@@ -1,4 +1,5 @@
 const express = require('express');
+const passport = require('passport');
 const connectDB = require('./config/db');
 const { cloudinaryConfig } = require('./config/cloudinary');
 const path = require('path');
@@ -10,6 +11,9 @@ connectDB();
 
 // Init Middleware
 app.use(express.json());
+
+// Init passport
+app.use(passport.initialize());
 
 // Init Cloudinary
 cloudinaryConfig();
@@ -33,3 +37,5 @@ if (process.env.NODE_ENV === 'production') {
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+
+module.exports = app;
