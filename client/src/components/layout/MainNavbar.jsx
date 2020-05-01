@@ -9,7 +9,7 @@ const MainNavbar = () => {
       <Navbar.Collapse id='navbarText'>
         <Nav className='nav-fill w-100' as='ul'>
           <Nav.Item as='li'>
-            <Link to='/main' className='nav-link'>
+            <Link to='/' className='nav-link'>
               Inicio
             </Link>
           </Nav.Item>

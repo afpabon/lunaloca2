@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import lunaloca from '../../img/lunaloca.png';
 import Carousel from './Carousel';
+import UserLogin from './UserLogin';
 
 import { getMainCarouselImages } from '../../actions/carousel';
 
@@ -13,10 +14,13 @@ const Header = ({ getMainCarouselImages, mainCarouselImages }) => {
   return (
     <>
       <header>
-        <div className='side-lined'>
+        <div className='col-md-3 col-xs-12 header-account'>
+          <UserLogin />
+        </div>
+        <div className='row side-lined'>
           <img src={lunaloca} className='main-logo' alt='Lunaloca cupcakes' />
         </div>
-        <div className='col-md-2 header-search'>
+        <div className='col-md-3 col-xs-12 header-search'>
           <div className='input-group mb-3'>
             <input
               className='form-control form-control-sm'

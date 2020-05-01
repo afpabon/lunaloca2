@@ -5,8 +5,6 @@ const config = require('config');
 const { check, validationResult } = require('express-validator');
 const passport = require('../../config/passport');
 
-const User = require('../../models/User');
-
 // @route    GET api/auth
 // @desc     Get user by token
 // @access   Private
@@ -21,9 +19,8 @@ router.get('/', async (req, res, next) => {
         res.status(500).send(info.message);
       } else {
         res.status(200).send({
-          auth: true,
-          ...user,
-          message: 'user found in db',
+          id: user._id,
+          first_name: user.first_name,
         });
       }
     })(req, res, next);

@@ -91,13 +91,15 @@ passport.use(
   'jwt',
   new JWTStrategy(opts, async (jwt_payload, done) => {
     try {
-      const user = await User.findOne({ email: jwt_payload.email });
+      const user = await User.findOne({ email: jwt_payload.id }).select(
+        '-password',
+      );
       if (user) {
         console.log('user found in db in passport');
         done(null, user);
       } else {
         console.log('user not found in db');
-        done(null, false);
+        done(null, false, { message: 'invalid token' });
       }
     } catch (err) {
       done(err);

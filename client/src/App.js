@@ -1,10 +1,5 @@
-import React from 'react';
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  Redirect,
-} from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 // Layout
 import MainLoadingOverlay from './components/layout/MainLoadingOverlay';
@@ -28,45 +23,61 @@ import Glase from './components/glossary/Glase';
 import Gallery from './components/gallery/Gallery';
 import ContactUs from './components/contact/ContactUs';
 import AboutUs from './components/about/AboutUs';
+import Register from './components/main/Register';
+import Login from './components/main/Login';
 
 // Redux
 import { Provider } from 'react-redux';
 import store from './store';
 
+import setAuthToken from './utils/setAuthToken';
+import { loadUser } from './actions/auth';
+
 import 'bootstrap/dist/css/bootstrap.css';
 import './css/style.min.css';
 
-const App = () => (
-  <Provider store={store}>
-    <MainLoadingOverlay>
-      <EnlargedImageModal />
-      <Router>
-        <div className='main-container'>
-          <Header />
-          <div className='content'>
-            <MainNavbar />
-            <Switch>
-              <Route exact path='/main' component={FrontPage} />
-              <Route exact path='/products' component={Products} />
-              <Route exact path='/products/cupcakes' component={Cupcakes} />
-              <Route exact path='/products/cakes' component={Cakes} />
-              <Route exact path='/products/pies' component={Pies} />
-              <Route exact path='/products/cookies' component={Cookies} />
-              <Route exact path='/products/pops' component={Pops} />
-              <Route exact path='/products/others' component={Others} />
-              <Route exact path='/glossary/fondant' component={Fondant} />
-              <Route exact path='/glossary/ganache' component={Ganache} />
-              <Route exact path='/glossary/glase' component={Glase} />
-              <Route path='/gallery/:id' component={Gallery} />
-              <Route exact path='/contact' component={ContactUs} />
-              <Route exact path='/about' component={AboutUs} />
-            </Switch>
+if (localStorage.token) {
+  setAuthToken(localStorage.token);
+}
+
+const App = () => {
+  useEffect(() => {
+    store.dispatch(loadUser());
+  }, []);
+  return (
+    <Provider store={store}>
+      <MainLoadingOverlay>
+        <EnlargedImageModal />
+        <Router>
+          <div className='main-container'>
+            <Header />
+            <div className='content'>
+              <MainNavbar />
+              <Switch>
+                <Route exact path='/products' component={Products} />
+                <Route exact path='/products/cupcakes' component={Cupcakes} />
+                <Route exact path='/products/cakes' component={Cakes} />
+                <Route exact path='/products/pies' component={Pies} />
+                <Route exact path='/products/cookies' component={Cookies} />
+                <Route exact path='/products/pops' component={Pops} />
+                <Route exact path='/products/others' component={Others} />
+                <Route exact path='/glossary/fondant' component={Fondant} />
+                <Route exact path='/glossary/ganache' component={Ganache} />
+                <Route exact path='/glossary/glase' component={Glase} />
+                <Route path='/gallery/:id' component={Gallery} />
+                <Route exact path='/contact' component={ContactUs} />
+                <Route exact path='/about' component={AboutUs} />
+                <Route exact path='/login' component={Login} />
+                <Route exact path='/register' component={Register} />
+                <Route exact path='/' component={FrontPage} />
+              </Switch>
+            </div>
+            <Footer />
           </div>
-          <Footer />
-        </div>
-      </Router>
-    </MainLoadingOverlay>
-  </Provider>
-);
+        </Router>
+      </MainLoadingOverlay>
+    </Provider>
+  );
+};
 
 export default App;
