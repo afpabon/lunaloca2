@@ -1,3 +1,4 @@
+import Swal from 'sweetalert2';
 import React, { useState, useCallback } from 'react';
 import { uuid } from 'uuidv4';
 import PropTypes from 'prop-types';
@@ -7,7 +8,13 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import RemoteImage from './RemoteImage';
 
-import { setCurrentEnlargedImage } from '../../actions/carousel';
+import {
+  setCurrentEnlargedImage,
+  triggerEditImage,
+  setRemovingImage,
+  deleteImage,
+} from '../../actions/carousel';
+import { setLoadingStatus } from '../../actions/loadingStatus';
 
 const generateResponsive = (settings, maxWidth, imageWidth, scrollDelta) => {
   if (maxWidth < imageWidth) return null;
@@ -48,6 +55,12 @@ const Carousel = ({
   maxWidth,
   maxHeight,
   setCurrentEnlargedImage,
+  isAdmin,
+  triggerEditImage,
+  deleteImage,
+  setRemovingImage,
+  setLoadingStatus,
+  category,
 }) => {
   const [width, setWidth] = useState(1);
   const div = useCallback(node => {
@@ -75,6 +88,28 @@ const Carousel = ({
     adaptiveHeight: true,
   };
 
+  const removeRequested = image => {
+    setRemovingImage(true);
+    Swal.fire({
+      title: '¿Estás segur@?',
+      text: '¡La imagen será eliminada de la base de datos y de cloudinary!',
+      icon: 'warning',
+      showCancelButton: true,
+      cancelButtonText: 'No, ¡mejor no!',
+      confirmButtonText: 'Sí, ¡estoy segur@!',
+    }).then(async isConfirm => {
+      if (isConfirm) {
+        setLoadingStatus(true);
+        await deleteImage(image);
+        setRemovingImage(false);
+        setLoadingStatus(false);
+      } else {
+        Swal('Cancelado', 'La imagen no ha sido eliminada', 'error');
+        setRemovingImage(false);
+      }
+    });
+  };
+
   if (lazy) {
     settings.lazyLoad = 'ondemand';
   }
@@ -99,6 +134,19 @@ const Carousel = ({
 
   return (
     <div ref={div}>
+      {isAdmin && (
+        <div className='row'>
+          <a
+            href='#!'
+            onClick={() => triggerEditImage(null, category)}
+            title='agregar'
+            style={{ marginLeft: '1em' }}
+          >
+            <i className='fas fa-images' />
+            Agregar
+          </a>
+        </div>
+      )}
       <Slider {...settings}>
         {images.map(image => (
           <div
@@ -116,7 +164,38 @@ const Carousel = ({
               width={maxWidth}
               fluid={false}
             />
-            <div className='overlay'>{image.description}</div>
+            <div className='overlay' style={{ width: maxWidth }}>
+              {isAdmin && (
+                <>
+                  <div className='row float-right'>
+                    <a
+                      href='#!'
+                      onClick={e => {
+                        e.preventDefault();
+                        triggerEditImage(image._id);
+                      }}
+                      title='editar'
+                    >
+                      <i className='fas fa-edit' />
+                      Editar
+                    </a>
+                    <a
+                      href='#!'
+                      onClick={e => {
+                        e.preventDefault();
+                        removeRequested(image._id);
+                      }}
+                      title='eliminar'
+                      style={{ marginLeft: '1em' }}
+                    >
+                      <i className='fas fa-trash-alt' />
+                      Eliminar
+                    </a>
+                  </div>
+                </>
+              )}
+              <div className='row float-left'>{image.description}</div>
+            </div>
           </div>
         ))}
       </Slider>
@@ -138,6 +217,12 @@ Carousel.propTypes = {
   maxWidth: PropTypes.number,
   maxHeight: PropTypes.number,
   setCurrentEnlargedImage: PropTypes.func.isRequired,
+  isAdmin: PropTypes.bool.isRequired,
+  triggerEditImage: PropTypes.func.isRequired,
+  deleteImage: PropTypes.func.isRequired,
+  setRemovingImage: PropTypes.func.isRequired,
+  setLoadingStatus: PropTypes.func.isRequired,
+  category: PropTypes.number,
 };
 
 Carousel.defaultProps = {
@@ -152,9 +237,20 @@ Carousel.defaultProps = {
   showArrows: true,
   maxWidth: 600,
   maxHeight: null,
+  category: null,
 };
 
+const mapStateToProps = state => ({
+  isAdmin: state.auth.user ? state.auth.user.is_admin : false,
+});
+
 export default connect(
-  null,
-  { setCurrentEnlargedImage },
+  mapStateToProps,
+  {
+    setCurrentEnlargedImage,
+    triggerEditImage,
+    setRemovingImage,
+    deleteImage,
+    setLoadingStatus,
+  },
 )(Carousel);

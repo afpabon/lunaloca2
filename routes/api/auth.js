@@ -21,6 +21,7 @@ router.get('/', async (req, res, next) => {
         res.status(200).send({
           id: user._id,
           first_name: user.first_name,
+          is_admin: user.is_admin,
         });
       }
     })(req, res, next);
@@ -62,7 +63,11 @@ router.post(
             res.status(200).send({
               auth: true,
               token,
-              message: 'user logged in',
+              user: {
+                id: user._id,
+                first_name: user.first_name,
+                is_admin: user.is_admin,
+              },
             });
           });
         }

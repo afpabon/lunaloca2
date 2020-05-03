@@ -6,7 +6,12 @@ import RemoteImage from './RemoteImage';
 
 import { resetCurrentEnlargedImage } from '../../actions/carousel';
 
-const EnlargedImageModal = ({ image, resetCurrentEnlargedImage }) => {
+const EnlargedImageModal = ({
+  image,
+  editingImage,
+  resetCurrentEnlargedImage,
+  removingImage,
+}) => {
   const [height, setHeight] = useState(window.innerHeight);
   const [width, setWidth] = useState(window.innerWidth);
 
@@ -33,7 +38,7 @@ const EnlargedImageModal = ({ image, resetCurrentEnlargedImage }) => {
 
   return (
     <Modal
-      show={image !== null}
+      show={image !== null && editingImage === null && !removingImage}
       onHide={handleClose}
       className='modal-container custom-map-modal'
       width={width}
@@ -65,15 +70,19 @@ const EnlargedImageModal = ({ image, resetCurrentEnlargedImage }) => {
 
 EnlargedImageModal.propTypes = {
   image: PropTypes.object,
+  editingImage: PropTypes.object,
   resetCurrentEnlargedImage: PropTypes.func.isRequired,
 };
 
 EnlargedImageModal.defaultProps = {
   image: null,
+  editingImage: null,
 };
 
 const mapStateToProps = state => ({
   image: state.carousel.currentEnlargedImage,
+  editingImage: state.carousel.editingImageData,
+  removingImage: state.carousel.removingImage,
 });
 
 export default connect(

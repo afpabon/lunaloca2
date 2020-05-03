@@ -20,9 +20,13 @@ const UserLogin = ({ isAuthenticated, loading, user, logout }) => {
 
 UserLogin.propTypes = {
   logout: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool.isRequired,
+  isAuthenticated: PropTypes.bool,
   loading: PropTypes.bool.isRequired,
   user: PropTypes.object,
+};
+
+UserLogin.defaultProps = {
+  isAuthenticated: null,
 };
 
 const mapStateToProps = state => ({

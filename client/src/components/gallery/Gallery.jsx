@@ -30,6 +30,7 @@ const Gallery = ({ getCarouselImages, carouselImages }) => {
           lazy
           maxWidth={Math.min(Math.floor(width / 3), 300)}
           maxHeight={300}
+          category={parseInt(id)}
         />
       </div>
     </div>

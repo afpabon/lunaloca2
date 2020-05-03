@@ -7,8 +7,10 @@ import Header from './components/layout/Header';
 import MainNavbar from './components/layout/MainNavbar';
 import Footer from './components/layout/Footer';
 import EnlargedImageModal from './components/layout/EnlargedImageModal';
+import EditImageModal from './components/image/EditImageModal';
 
 // Pages
+import EditImage from './components/image/EditImage';
 import FrontPage from './components/main/FrontPage';
 import Products from './components/products/Products';
 import Cupcakes from './components/products/Cupcakes';
@@ -48,7 +50,9 @@ const App = () => {
     <Provider store={store}>
       <MainLoadingOverlay>
         <EnlargedImageModal />
+        <EditImageModal />
         <Router>
+          <Route exact path='/editimage' component={EditImage} />
           <div className='main-container'>
             <Header />
             <div className='content'>
