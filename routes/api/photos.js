@@ -5,6 +5,7 @@ const { multerUploads, dataUri } = require('../../middleware/multer');
 const { uploader } = require('../../config/cloudinary');
 
 const Photo = require('../../models/Photo');
+const { Category } = require('../../models/Category');
 
 const transformImage = image => {
   const { categories, tags } = image;
@@ -37,11 +38,20 @@ const transformImage = image => {
 router.get('/category/:categoryId', async (req, res) => {
   try {
     const id = parseInt(req.params.categoryId);
-    const photos = await Photo.find({
-      categories: id,
-    }).select('url description');
+    if (id !== 99) {
+      const photos = await Photo.find({
+        categories: id,
+      }).select('url description');
 
-    res.json(photos);
+      res.json(photos);
+    } else {
+      const existingIds = await Category.find({}).select({ publicid: 1 });
+      const photos = await Photo.find({
+        categories: { $nin: existingIds.map(i => i.publicid) },
+      }).select('url description');
+
+      res.json(photos);
+    }
   } catch (err) {
     console.error(err.message);
 
