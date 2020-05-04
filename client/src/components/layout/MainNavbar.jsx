@@ -1,9 +1,18 @@
-import React from 'react';
+import _ from 'lodash';
+import React, { useEffect } from 'react';
+import { uuid } from 'uuidv4';
+import { connect } from 'react-redux';
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { GALLERY_GROUP } from '../../constants/enums';
 
-const MainNavbar = () => {
+import { loadCategories } from '../../actions/main';
+
+const MainNavbar = ({ categories, loadCategories }) => {
+  useEffect(() => {
+    loadCategories();
+  }, [loadCategories]);
+
   return (
     <Navbar bg='main' expand='lg' variant='main'>
       <Navbar.Collapse id='navbarText'>
@@ -44,24 +53,14 @@ const MainNavbar = () => {
             id='gallery_toggle'
             as='li'
           >
-            <Link
-              to={`/gallery/${GALLERY_GROUP.CUPCAKES}`}
-              className='dropdown-item'
-            >
-              Cupcakes
-            </Link>
-            <Link
-              to={`/gallery/${GALLERY_GROUP.CAKES}`}
-              className='dropdown-item'
-            >
-              Tortas
-            </Link>
-            <Link
-              to={`/gallery/${GALLERY_GROUP.OTHERS}`}
-              className='dropdown-item'
-            >
-              Otros
-            </Link>
+            {_.map(categories, category => (
+              <Link
+                to={`/gallery/${category.publicid}`}
+                className='dropdown-item'
+              >
+                {category.name}
+              </Link>
+            ))}
           </NavDropdown>
           <Nav.Item as='li'>
             <Link to='/contact' className='nav-link'>
@@ -79,4 +78,11 @@ const MainNavbar = () => {
   );
 };
 
-export default MainNavbar;
+const mapStateToProps = state => ({
+  categories: state.main.categories,
+});
+
+export default connect(
+  mapStateToProps,
+  { loadCategories },
+)(MainNavbar);
