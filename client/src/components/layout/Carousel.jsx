@@ -97,8 +97,8 @@ const Carousel = ({
       showCancelButton: true,
       cancelButtonText: 'No, ¡mejor no!',
       confirmButtonText: 'Sí, ¡estoy segur@!',
-    }).then(async isConfirm => {
-      if (isConfirm) {
+    }).then(async confirm => {
+      if (confirm.value) {
         setLoadingStatus(true);
         await deleteImage(image);
         setRemovingImage(false);

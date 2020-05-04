@@ -71,6 +71,13 @@
     }
   }
 
+  &.btn-danger {
+    @include set-background($danger-color);
+    &:hover {
+      background-color: darken($danger-color, 20%);
+    }
+  }
+
   &:hover {
     background-color: lighten($main-color, 20%);
     color: $light-color;

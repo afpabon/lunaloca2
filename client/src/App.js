@@ -9,8 +9,10 @@ import Footer from './components/layout/Footer';
 import EnlargedImageModal from './components/layout/EnlargedImageModal';
 import EditImageModal from './components/image/EditImageModal';
 
+// Admin
+import Categories from './components/admin/Categories';
+
 // Pages
-import EditImage from './components/image/EditImage';
 import FrontPage from './components/main/FrontPage';
 import Products from './components/products/Products';
 import Cupcakes from './components/products/Cupcakes';
@@ -42,6 +44,34 @@ if (localStorage.token) {
   setAuthToken(localStorage.token);
 }
 
+const UserPage = ({ match }) => (
+  <>
+    <Header />
+    <div className='content'>
+      <MainNavbar />
+      <Switch>
+        <Route exact path='/products' component={Products} />
+        <Route exact path='/products/cupcakes' component={Cupcakes} />
+        <Route exact path='/products/cakes' component={Cakes} />
+        <Route exact path='/products/pies' component={Pies} />
+        <Route exact path='/products/cookies' component={Cookies} />
+        <Route exact path='/products/pops' component={Pops} />
+        <Route exact path='/products/others' component={Others} />
+        <Route exact path='/glossary/fondant' component={Fondant} />
+        <Route exact path='/glossary/ganache' component={Ganache} />
+        <Route exact path='/glossary/glase' component={Glase} />
+        <Route path='/gallery/:id' component={Gallery} />
+        <Route exact path='/contact' component={ContactUs} />
+        <Route exact path='/about' component={AboutUs} />
+        <Route exact path='/login' component={Login} />
+        <Route exact path='/register' component={Register} />
+        <Route exact path='/' component={FrontPage} />
+      </Switch>
+    </div>
+    <Footer />
+  </>
+);
+
 const App = () => {
   useEffect(() => {
     store.dispatch(loadUser());
@@ -52,31 +82,11 @@ const App = () => {
         <EnlargedImageModal />
         <EditImageModal />
         <Router>
-          <Route exact path='/editimage' component={EditImage} />
           <div className='main-container'>
-            <Header />
-            <div className='content'>
-              <MainNavbar />
-              <Switch>
-                <Route exact path='/products' component={Products} />
-                <Route exact path='/products/cupcakes' component={Cupcakes} />
-                <Route exact path='/products/cakes' component={Cakes} />
-                <Route exact path='/products/pies' component={Pies} />
-                <Route exact path='/products/cookies' component={Cookies} />
-                <Route exact path='/products/pops' component={Pops} />
-                <Route exact path='/products/others' component={Others} />
-                <Route exact path='/glossary/fondant' component={Fondant} />
-                <Route exact path='/glossary/ganache' component={Ganache} />
-                <Route exact path='/glossary/glase' component={Glase} />
-                <Route path='/gallery/:id' component={Gallery} />
-                <Route exact path='/contact' component={ContactUs} />
-                <Route exact path='/about' component={AboutUs} />
-                <Route exact path='/login' component={Login} />
-                <Route exact path='/register' component={Register} />
-                <Route exact path='/' component={FrontPage} />
-              </Switch>
-            </div>
-            <Footer />
+            <Switch>
+              <Route exact path='/admin/categories' component={Categories} />
+              <Route path='/' component={UserPage} />
+            </Switch>
           </div>
         </Router>
       </MainLoadingOverlay>
