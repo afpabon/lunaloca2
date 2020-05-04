@@ -11,6 +11,7 @@ import EditImageModal from './components/image/EditImageModal';
 
 // Admin
 import Categories from './components/admin/Categories';
+import QuotationBases from './components/admin/QuotationBases';
 
 // Pages
 import FrontPage from './components/main/FrontPage';
@@ -85,6 +86,11 @@ const App = () => {
           <div className='main-container'>
             <Switch>
               <Route exact path='/admin/categories' component={Categories} />
+              <Route
+                exact
+                path='/admin/quotationbases'
+                component={QuotationBases}
+              />
               <Route path='/' component={UserPage} />
             </Switch>
           </div>

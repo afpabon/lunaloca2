@@ -2,7 +2,6 @@ import Swal from 'sweetalert2';
 import _ from 'lodash';
 import { uuid } from 'uuidv4';
 import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import CategoriesRow from './CategoriesRow';
 import EditCategory from './EditCategory';
@@ -30,7 +29,7 @@ const Categories = ({
   const removeRequested = category => {
     Swal.fire({
       title: '¿Estás segur@?',
-      text: '¡La categoría será eliminada de la base de datos y de cloudinary!',
+      text: '¡La categoría será eliminada de la base de datos!',
       icon: 'warning',
       showCancelButton: true,
       cancelButtonText: 'No, ¡mejor no!',
@@ -91,9 +90,6 @@ const Categories = ({
 
 const mapStateToProps = state => ({
   categories: state.categories.categoriesData,
-  editCategory: PropTypes.func.isRequired,
-  removeCategory: PropTypes.func.isRequired,
-  setLoadingStatus: PropTypes.func.isRequired,
 });
 
 const mapDispatchToProps = {

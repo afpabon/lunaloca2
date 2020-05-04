@@ -131,14 +131,11 @@ router.post(
       ) {
         return res.status(401).send('Some sizes provided are not allowed');
       }
-
       const elementIds = categoryObj.elements.map(e => e._id.toString());
-      const elementId = element._id.toString();
-      const elementObj = _.find(elementIds, e => e === elementId);
+      const elementObj = _.find(elementIds, e => e === element);
       if (!elementObj) {
         return res.status(401).send('Element does not exist');
       }
-
       const newQuotationBase = new QuotationBase({
         category,
         element,
@@ -146,7 +143,6 @@ router.post(
         description,
         quotationbysizes,
       });
-
       const quotationBase = await newQuotationBase.save();
 
       res.json(quotationBase);

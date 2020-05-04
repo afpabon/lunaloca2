@@ -46,11 +46,11 @@ router.get('/menu', async (err, res) => {
 // @route    GET api/category/elements/:id
 // @desc     Get all elements for category
 // @access   Public
-router.get('/elements/:id', async (err, res) => {
+router.get('/elements/:id', async (req, res) => {
   try {
-    const category = await Category.findById(req.param.id);
+    const category = await Category.findById(req.params.id);
     if (!category) {
-      return res.status(404).message('Category not found');
+      return res.status(404).send('Category not found');
     }
     res.json({
       elements: _.sortBy(category.elements, 'index'),

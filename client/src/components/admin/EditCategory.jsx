@@ -10,7 +10,6 @@ import {
   cancelEditCategory,
   updateCategory,
   saveCategory,
-  removeCategory,
 } from '../../actions/categories';
 
 const MAX_SIZES = 100;

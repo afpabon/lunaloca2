@@ -8,7 +8,7 @@ const CategoriesRow = ({ category, onEdit, onDelete }) => (
       data-target={`#edit_${category._id.toString()}`}
       className='accordion-toggle'
     >
-      <td scope='row'>{_.get(category, 'publicid')}</td>
+      <td>{_.get(category, 'publicid')}</td>
       <td>{_.get(category, 'name')}</td>
       <td>{_.get(category, 'onmenu') ? 'Sí' : 'No'}</td>
       <td>{_.get(category, 'units')}</td>
