@@ -4,7 +4,6 @@ import { uuid } from 'uuidv4';
 import { connect } from 'react-redux';
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { GALLERY_GROUP } from '../../constants/enums';
 
 import { loadCategories } from '../../actions/main';
 
@@ -55,6 +54,7 @@ const MainNavbar = ({ categories, loadCategories }) => {
           >
             {_.map(categories, category => (
               <Link
+                key={uuid()}
                 to={`/gallery/${category.publicid}`}
                 className='dropdown-item'
               >

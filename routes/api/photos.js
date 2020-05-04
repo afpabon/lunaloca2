@@ -1,3 +1,4 @@
+const _ = require('lodash');
 const express = require('express');
 const router = express.Router();
 const auth = require('../../middleware/auth');
@@ -31,6 +32,39 @@ const transformImage = image => {
     tags: newTags,
   };
 };
+
+// @route    GET api/photos/quotationBases/:categories
+// @desc     Get all decoration quotation bases by categories
+// @access   Private
+router.get('/quotationBases/:categories', auth, async (req, res) => {
+  try {
+    const orList = _.map(req.params.categories.split(','), category => ({
+      category,
+    }));
+    const categories = await Category.find({
+      _id: { $in: req.params.categories.split(',') },
+    });
+    _.forEach(orList, item => {
+      const category = _.find(categories);
+      if (!category) {
+        return res.status(404).send('Category does not exist');
+      }
+      item.element = _.get(
+        _.find(category.elements, e => e.index === 99),
+        '_id',
+      );
+    });
+    const quotationBases = await QuotationBase.find({
+      $or: orList,
+    })
+      .sort({ name: 1 })
+      .select({ name: 1 });
+    res.json(quotationBases);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
 
 // @route    GET api/photos/category/:categoryId
 // @desc     Get photos by category

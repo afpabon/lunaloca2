@@ -5,6 +5,7 @@ import {
   GET_CAROUSEL_IMAGES,
   RESET_CURRENT_ENLARGED_IMAGE,
   SET_CURRENT_ENLARGED_IMAGE,
+  LOAD_DECORATION_QUOTATION_BASES,
   TRIGGER_EDIT_IMAGE,
   CANCEL_IMAGE_EDITING,
   UPDATE_IMAGE,
@@ -13,6 +14,17 @@ import {
   SET_REMOVING_IMAGE,
   REMOVE_IMAGE,
 } from './types';
+
+export const loadDecorationQuotationBases = categories => async dispatch => {
+  const res = await axios.get(
+    `/api/photos/quotationBases/${categories.join(',')}`,
+  );
+
+  dispatch({
+    type: LOAD_DECORATION_QUOTATION_BASES,
+    payload: res.data,
+  });
+};
 
 export const getMainCarouselImages = () => async dispatch => {
   const res = await axios.get('/api/photos/starred');

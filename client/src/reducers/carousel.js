@@ -3,6 +3,7 @@ import {
   GET_MAIN_CAROUSEL_IMAGES,
   RESET_CURRENT_ENLARGED_IMAGE,
   SET_CURRENT_ENLARGED_IMAGE,
+  LOAD_DECORATION_QUOTATION_BASES,
   TRIGGER_EDIT_IMAGE,
   CANCEL_IMAGE_EDITING,
   SAVE_IMAGE,
@@ -15,6 +16,7 @@ import {
 const initialState = {
   mainCarousel: [],
   currentCarousel: [],
+  decorations: [],
   currentEnlargedImage: null,
   editingImage: null,
   editingImageData: null,
@@ -44,6 +46,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         currentEnlargedImage: action.payload,
+      };
+    case LOAD_DECORATION_QUOTATION_BASES:
+      return {
+        ...state,
+        decorations: action.payload,
       };
     case TRIGGER_EDIT_IMAGE:
       return {
