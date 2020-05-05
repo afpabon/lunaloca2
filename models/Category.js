@@ -4,6 +4,7 @@ const { Schema } = mongoose;
 const ElementSchema = new Schema({
   index: Number,
   name: String,
+  required: Boolean,
 });
 
 const CategorySchema = new Schema({

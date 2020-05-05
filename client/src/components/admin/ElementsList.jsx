@@ -6,6 +6,7 @@ import { Button } from 'react-bootstrap';
 const ElementsList = ({ elements, onChange, newAllowed }) => {
   const [editingElementIndex, setEditingElementIndex] = useState(-1);
   const inputRef = useRef(null);
+  const checkRef = useRef(null);
 
   const adjustIndices = (element, up) => {
     const index = _.findIndex(
@@ -46,9 +47,10 @@ const ElementsList = ({ elements, onChange, newAllowed }) => {
     }
   };
 
-  const nameChanged = () => {
+  const elementChanged = () => {
     const newElements = [...elements];
     newElements[editingElementIndex].name = inputRef.current.value;
+    newElements[editingElementIndex].required = checkRef.current.checked;
     onChange(newElements);
     setEditingElementIndex(-1);
   };
@@ -62,7 +64,7 @@ const ElementsList = ({ elements, onChange, newAllowed }) => {
               <div className='btn-group' role='group'>
                 <Button
                   className='btn btn-light btn-xs'
-                  onClick={() => nameChanged()}
+                  onClick={() => elementChanged()}
                 >
                   <i className='fas fa-check' />
                 </Button>
@@ -112,6 +114,26 @@ const ElementsList = ({ elements, onChange, newAllowed }) => {
                 />
               ) : (
                 element.name
+              )}
+            </div>
+            <div className='form-check'>
+              {index === editingElementIndex ? (
+                <div className='l-5'>
+                  <input
+                    type='checkbox'
+                    className='form-check-input'
+                    id='required'
+                    defaultChecked={element.required}
+                    ref={checkRef}
+                  />
+                  <label className='form-check-label' htmlFor='required'>
+                    Requerida
+                  </label>
+                </div>
+              ) : element.required ? (
+                '*'
+              ) : (
+                ''
               )}
             </div>
           </div>

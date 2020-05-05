@@ -10,11 +10,11 @@ const QuotationBase = require('../../models/QuotationBase');
 const { Category } = require('../../models/Category');
 
 // @route    GET api/quotationbase/:categoryid/:previousIndex
-// @desc     Get next valid quotation bases from category, size and previous index
+// @desc     Get next valid quotation bases from category public id, size and previous index
 // @access   Public
-router.get('/:categoryid/:size/:previousIndex', async (req, res) => {
+router.get('/:publicid/:size/:previousIndex', async (req, res) => {
   try {
-    const category = await Category.findById(req.params.categoryid);
+    const category = await Category.findOne({ publicid: req.params.publicid });
     if (!category) {
       return res.status(404).send('Category not found');
     }
@@ -30,12 +30,11 @@ router.get('/:categoryid/:size/:previousIndex', async (req, res) => {
     }
 
     const quotationbases = await QuotationBase.find({
-      category: req.params.categoryid,
+      category: category._id,
       element: nextElement._id,
     })
       .sort({ name: 1 })
       .select({ name: 1, description: 1, quotationbysizes: 1 });
-
     const size = parseInt(req.params.size);
     const validquotationbases = _.filter(
       quotationbases,

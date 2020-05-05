@@ -31,6 +31,10 @@ const EnlargedImageModal = ({
     resetCurrentEnlargedImage();
   };
 
+  const handleQuote = () => {
+    resetCurrentEnlargedImage();
+  };
+
   const offset =
     100 +
     (image && image.description ? 30 : 0) +
@@ -58,6 +62,13 @@ const EnlargedImageModal = ({
             </div>
           </Modal.Body>
           <Modal.Footer>
+            <Button
+              variant='secondary'
+              className='btn-highlight'
+              onClick={handleQuote}
+            >
+              Cotizar
+            </Button>
             <Button variant='secondary' onClick={handleClose}>
               Cerrar
             </Button>

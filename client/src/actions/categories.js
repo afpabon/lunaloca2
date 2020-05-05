@@ -19,12 +19,14 @@ const transformElements = elements =>
       return {
         index: e.index,
         name: e.name,
+        required: false,
       };
     }
     return {
       _id: e._id,
       index: e.index,
       name: e.name,
+      required: e.required,
     };
   });
 

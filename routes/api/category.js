@@ -13,6 +13,7 @@ const crunchElements = (elements, decorationElement) =>
     (e, i) => ({
       ...e,
       index: i + 1,
+      required: e.required || false,
     }),
   ).concat(
     decorationElement || {
@@ -43,12 +44,12 @@ router.get('/menu', async (err, res) => {
   }
 });
 
-// @route    GET api/category/elements/:id
+// @route    GET api/category/elements/:publicid
 // @desc     Get all elements for category
 // @access   Public
-router.get('/elements/:id', async (req, res) => {
+router.get('/elements/:publicid', async (req, res) => {
   try {
-    const category = await Category.findById(req.params.id);
+    const category = await Category.findOne({ publicid: req.params.publicid });
     if (!category) {
       return res.status(404).send('Category not found');
     }
