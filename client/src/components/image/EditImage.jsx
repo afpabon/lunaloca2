@@ -22,8 +22,9 @@ const EditImage = ({
   loadDecorationQuotationBases,
 }) => {
   useEffect(() => {
-    loadDecorationQuotationBases(imageData.categories);
-  }, [loadDecorationQuotationBases, imageData.categories]);
+    if (imageData && imageData.categories)
+      loadDecorationQuotationBases(_.get(imageData, 'categories'));
+  }, [loadDecorationQuotationBases, imageData]);
 
   if (!imageData) return null;
 

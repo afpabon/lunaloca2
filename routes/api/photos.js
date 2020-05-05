@@ -7,6 +7,7 @@ const { uploader } = require('../../config/cloudinary');
 
 const Photo = require('../../models/Photo');
 const { Category } = require('../../models/Category');
+const QuotationBase = require('../../models/QuotationBase');
 
 const transformImage = image => {
   const { categories, tags } = image;
@@ -38,14 +39,17 @@ const transformImage = image => {
 // @access   Private
 router.get('/quotationBases/:categories', auth, async (req, res) => {
   try {
-    const orList = _.map(req.params.categories.split(','), category => ({
-      category,
-    }));
     const categories = await Category.find({
-      _id: { $in: req.params.categories.split(',') },
+      publicid: { $in: req.params.categories.split(',') },
     });
+    const orList = _.map(categories, c => ({
+      category: c._id.toString(),
+    }));
     _.forEach(orList, item => {
-      const category = _.find(categories);
+      const category = _.find(
+        categories,
+        c => c._id.toString() === item.category,
+      );
       if (!category) {
         return res.status(404).send('Category does not exist');
       }
