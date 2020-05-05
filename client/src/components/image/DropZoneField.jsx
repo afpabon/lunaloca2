@@ -3,22 +3,36 @@ import PropTypes from 'prop-types';
 import { useDropzone } from 'react-dropzone';
 import ImagePreview from './ImagePreview';
 import Placeholder from './Placeholder';
+import { CLOUDINARY } from '../../constants/config';
 
-const DropZoneField = ({ handleOnDrop, imagefile }) => {
+const DropZoneField = ({ handleOnDrop, imagefile, initialImage }) => {
   const onDrop = useCallback(acceptedFiles => handleOnDrop(acceptedFiles), [
     handleOnDrop,
   ]);
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
+  let innerControl = <Placeholder />;
+
+  if (imagefile && imagefile.length > 0) {
+    innerControl = <ImagePreview imagefile={imagefile[0]} />;
+  } else if (initialImage && initialImage.length) {
+    innerControl = (
+      <div className='render-preview'>
+        <div className='image-container'>
+          <img
+            src={`${CLOUDINARY}/h_250,c_fill/${initialImage}`}
+            alt='Imagen existente'
+          />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className='preview-container'>
       <div {...getRootProps()} className='dropzone-inner'>
         <input {...getInputProps()} />
-        {imagefile && imagefile.length > 0 ? (
-          <ImagePreview imagefile={imagefile[0]} />
-        ) : (
-          <Placeholder />
-        )}
+        {innerControl}
       </div>
     </div>
   );
@@ -38,6 +52,7 @@ DropZoneField.propTypes = {
     }),
   }),
   imagefile: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
+  initialImage: PropTypes.string,
   label: PropTypes.string,
   touched: PropTypes.bool,
   error: PropTypes.string,

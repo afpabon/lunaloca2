@@ -6,6 +6,7 @@ import {
   EDIT_QUOTATION_BASE,
   CANCEL_EDIT_QUOTATION_BASE,
   UPDATE_QUOTATION_BASE,
+  UPDATE_BASE_IMAGE,
   SAVE_QUOTATION_BASE,
   REMOVE_QUOTATION_BASE,
 } from '../actions/types';
@@ -13,6 +14,7 @@ import {
 const initialState = {
   quotationBasesData: [],
   editingQuotationBase: {},
+  baseImage: null,
   category: null,
   element: null,
 };
@@ -21,6 +23,7 @@ const emptyQuotationBase = {
   name: '',
   description: '',
   quotationbysizes: [],
+  url: '',
   isNew: true,
 };
 
@@ -59,11 +62,17 @@ export default (state = initialState, action) => {
       return {
         ...state,
         editingQuotationBase: {},
+        baseImage: null,
       };
     case UPDATE_QUOTATION_BASE:
       return {
         ...state,
         editingQuotationBase: payload,
+      };
+    case UPDATE_BASE_IMAGE:
+      return {
+        ...state,
+        baseImage: action.payload,
       };
     case SAVE_QUOTATION_BASE: {
       if (payload.isNew) {
@@ -75,6 +84,7 @@ export default (state = initialState, action) => {
             newQuotationBase,
           ]),
           editingQuotationBase: {},
+          baseImage: null,
         };
       }
       const index = _.findIndex(
@@ -88,6 +98,7 @@ export default (state = initialState, action) => {
           .concat([payload])
           .concat(state.quotationBasesData.slice(index + 1)),
         editingQuotationBase: {},
+        baseImage: null,
       };
     }
     case REMOVE_QUOTATION_BASE: {

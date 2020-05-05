@@ -7,6 +7,7 @@ import {
   EDIT_QUOTATION_BASE,
   CANCEL_EDIT_QUOTATION_BASE,
   UPDATE_QUOTATION_BASE,
+  UPDATE_BASE_IMAGE,
   SAVE_QUOTATION_BASE,
   SET_REMOVING_QUOTATION_BASE,
   REMOVE_QUOTATION_BASE,
@@ -62,21 +63,38 @@ export const updateQuotationBase = quotationBase => dispatch => {
   });
 };
 
-export const saveQuotationBase = quotationBase => async dispatch => {
+export const updateBaseImage = image => dispatch => {
+  dispatch({
+    type: UPDATE_BASE_IMAGE,
+    payload: image,
+  });
+};
+
+export const saveQuotationBase = (quotationBase, image) => async dispatch => {
   const config = {
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'multipart/form-data',
     },
   };
-  const body = JSON.stringify(quotationBase);
+
+  const formData = new FormData();
+  if (image) {
+    formData.append('file', image[0]);
+  }
+
+  Object.keys(quotationBase).forEach(key => {
+    if (Array.isArray(quotationBase[key])) {
+      formData.append(key, JSON.stringify(quotationBase[key]));
+    } else formData.append(key, quotationBase[key]);
+  });
 
   let res = { status: 500 };
   if (quotationBase.isNew) {
-    res = await axios.post('/api/quotationBase', body, config);
+    res = await axios.post('/api/quotationBase', formData, config);
   } else {
     res = await axios.put(
       `/api/quotationbase/${quotationBase._id.toString()}`,
-      body,
+      formData,
       config,
     );
   }

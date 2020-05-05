@@ -12,6 +12,7 @@ const QuotationBaseSchema = new Schema({
   name: String,
   description: String,
   quotationbysizes: [QuotationBySizeSchema],
+  url: String,
 });
 
 module.exports = mongoose.model('quotationbase', QuotationBaseSchema);

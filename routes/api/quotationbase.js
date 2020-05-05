@@ -3,6 +3,8 @@ const express = require('express');
 const router = express.Router();
 const { check, validationResult } = require('express-validator');
 const auth = require('../../middleware/auth');
+const { multerUploads, dataUri } = require('../../middleware/multer');
+const { uploader } = require('../../config/cloudinary');
 
 const QuotationBase = require('../../models/QuotationBase');
 const { Category } = require('../../models/Category');
@@ -78,148 +80,182 @@ router.get('/:categoryid/:elementid', auth, async (req, res) => {
 // @route    POST api/quotationbase
 // @desc     Add a quotation base
 // @access   Private
-router.post(
-  '/',
-  [
-    auth,
-    check('category', 'Category is required')
-      .not()
-      .isEmpty(),
-    check('element', 'Element is required')
-      .not()
-      .isEmpty(),
-    check('name', 'Name is required')
-      .not()
-      .isEmpty(),
-    check(
-      'quotationbysizes.*.size',
-      'All quotations must have a size greater than 0',
-    ).isInt([{ min: 1 }]),
-    check(
-      'quotationbysizes.*.price',
-      'All quotations must have a price greater or equal to 0',
-    ).isInt([{ min: 0 }]),
-    check(
-      'quotationbysizes',
-      'Quotation by sizes must be an array at least 1 element long',
-    ).isArray(1),
-  ],
-  async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+router.post('/', [multerUploads, auth], async (req, res) => {
+  try {
+    // Validations
+    const { category, element, name, description } = req.body;
+    const quotationbysizes = JSON.parse(req.body.quotationbysizes);
+    const errors = [];
+    if (!category || !category.length) {
+      errors.push('Category is required');
+    }
+    if (!element || !element.length) {
+      errors.push('Element is required');
+    }
+    if (!name || !name.length) {
+      errors.push('Name is required');
+    }
+    if (!quotationbysizes || !quotationbysizes.length) {
+      errors.push(
+        'Quotation by sizes must be an array at least 1 element long',
+      );
+    }
+    _.forEach(quotationbysizes, qs => {
+      if (qs.price === undefined || qs.price === null) {
+        errors.push('All quotations must have a valid price');
+      }
+    });
+    if (errors.length > 0) {
+      return res.status(400).json({ errors });
     }
 
-    try {
-      const {
-        category,
-        element,
-        name,
-        description,
-        quotationbysizes,
-      } = req.body;
-
-      const categoryObj = await Category.findById(category);
-      if (!categoryObj) {
-        return res.status(401).send('Category does not exist');
-      }
-      if (
-        _.intersection(
-          _.map(quotationbysizes, qs => qs.size),
-          categoryObj.validsizes,
-        ).length !== quotationbysizes.length
-      ) {
-        return res.status(401).send('Some sizes provided are not allowed');
-      }
-      const elementIds = categoryObj.elements.map(e => e._id.toString());
-      const elementObj = _.find(elementIds, e => e === element);
-      if (!elementObj) {
-        return res.status(401).send('Element does not exist');
-      }
-      const newQuotationBase = new QuotationBase({
-        category,
-        element,
-        name,
-        description,
-        quotationbysizes,
-      });
-      const quotationBase = await newQuotationBase.save();
-
-      res.json(quotationBase);
-    } catch (err) {
-      console.error(err.message);
-      res.status(500).send('Server Error');
+    const categoryObj = await Category.findById(category);
+    if (!categoryObj) {
+      return res.status(401).send('Category does not exist');
     }
-  },
-);
+    if (
+      _.intersection(
+        _.map(quotationbysizes, qs => qs.size),
+        categoryObj.validsizes,
+      ).length !== quotationbysizes.length
+    ) {
+      return res.status(401).send('Some sizes provided are not allowed');
+    }
+    const elementIds = categoryObj.elements.map(e => e._id.toString());
+    const elementObj = _.find(elementIds, e => e === element);
+    if (!elementObj) {
+      return res.status(401).send('Element does not exist');
+    }
+
+    //Generate new object and upload image to cloudinary
+    const newQuotationBase = new QuotationBase({
+      category,
+      element,
+      name,
+      description,
+      quotationbysizes,
+    });
+
+    const file = dataUri(req).content;
+
+    const image = await uploader.upload(file, { description });
+    if (!image) {
+      console.log('Image not uploaded to cloudinary');
+      res.status(500).send('Server error');
+    }
+    const parts = image.url.split('/');
+    if (!parts || parts.length < 2) {
+      console.log('Bad image url generated');
+      res.status(500).send('Server error');
+    }
+    const url = `${parts[parts.length - 2]}/${parts[parts.length - 1]}`;
+
+    newQuotationBase.url = url;
+
+    const quotationBase = await newQuotationBase.save();
+
+    res.json(quotationBase);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
 
 // @route    PUT api/quotationbase/:id
 // @desc     Modify a quotation base
 // @access   Private
-router.put(
-  '/:id',
-  [
-    auth,
-    check('name', 'Name is required')
-      .not()
-      .isEmpty(),
-    check(
-      'quotationbysizes.*.size',
-      'All quotations must have a size greater than 0',
-    ).isInt([{ min: 1 }]),
-    check(
-      'quotationbysizes.*.price',
-      'All quotations must have a price greater or equal to 0',
-    ).isInt([{ min: 0 }]),
-    check(
-      'quotationbysizes',
-      'Quotation by sizes must be an array at least 1 element long',
-    ).isArray(1),
-  ],
-  async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+router.put('/:id', [multerUploads, auth], async (req, res) => {
+  try {
+    // Validations
+    const { name, description } = req.body;
+    const quotationbysizes = JSON.parse(req.body.quotationbysizes);
+    const errors = [];
+    if (!name || !name.length) {
+      errors.push('Name is required');
+    }
+    if (!quotationbysizes || !quotationbysizes.length) {
+      errors.push(
+        'Quotation by sizes must be an array at least 1 element long',
+      );
+    }
+    _.forEach(quotationbysizes, qs => {
+      if (qs.price === undefined || qs.price === null) {
+        errors.push('All quotations must have a valid price');
+      }
+    });
+    if (errors.length > 0) {
+      return res.status(400).json({ errors });
     }
 
-    try {
-      const { name, description, quotationbysizes } = req.body;
+    const quotationBase = await QuotationBase.findById(req.params.id);
 
-      const quotationBase = await QuotationBase.findById(req.params.id);
+    const categoryObj = await Category.findById(quotationBase.category);
+    if (
+      _.intersection(
+        _.map(quotationbysizes, qs => qs.size),
+        categoryObj.validsizes,
+      ).length !== quotationbysizes.length
+    ) {
+      return res.status(401).send('Some sizes provided are not allowed');
+    }
 
-      const categoryObj = await Category.findById(quotationBase.category);
-      if (
-        _.intersection(
-          _.map(quotationbysizes, qs => qs.size),
-          categoryObj.validsizes,
-        ).length !== quotationbysizes.length
-      ) {
-        return res.status(401).send('Some sizes provided are not allowed');
+    quotationBase.name = name;
+    if (description) quotationBase.description = description;
+    quotationBase.quotationbysizes = quotationbysizes;
+
+    if (req.file) {
+      if (req.body.url) {
+        const urlParts = req.body.url.split('/');
+        const publicId = urlParts[urlParts.length - 1].split('.')[0];
+
+        await uploader.destroy(publicId);
       }
 
-      quotationBase.name = name;
-      if (description) quotationBase.description = description;
-      quotationBase.quotationbysizes = quotationbysizes;
+      const file = dataUri(req).content;
 
-      await quotationBase.save;
+      const image = await uploader.upload(file, { description });
+      if (!image) {
+        console.log('Image not uploaded to cloudinary');
+        res.status(500).send('Server error');
+      }
+      const parts = image.url.split('/');
+      if (!parts || parts.length < 2) {
+        console.log('Bad image url generated');
+        res.status(500).send('Server error');
+      }
+      const url = `${parts[parts.length - 2]}/${parts[parts.length - 1]}`;
 
-      res.json(quotationBase);
-    } catch (err) {
-      console.error(err.message);
-      res.status(500).send('Server Error');
+      quotationBase.url = url;
     }
-  },
-);
+
+    await quotationBase.save();
+
+    res.json(quotationBase);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
 
 // @route    DELETE api/quotationbase/:id
 // @desc     Delete a quotation base
 // @access   Private
 router.delete('/:id', [auth], async (req, res) => {
   try {
-    const result = await QuotationBase.findOneAndRemove({ _id: req.params.id });
-    if (!result) {
+    const quotationBase = await QuotationBase.findById(req.params.id);
+    if (!quotationBase) {
       return res.status(404).send('Quotation base not found');
     }
+
+    if (quotationBase.url) {
+      const urlParts = quotationBase.url.split('/');
+      const publicId = urlParts[urlParts.length - 1].split('.')[0];
+
+      await uploader.destroy(publicId);
+    }
+
+    await quotationBase.remove();
+
     res.send('Quotation base removed');
   } catch (err) {
     console.error(err.message);
