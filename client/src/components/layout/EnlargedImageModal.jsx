@@ -5,11 +5,14 @@ import { Modal, Button } from 'react-bootstrap';
 import RemoteImage from './RemoteImage';
 
 import { resetCurrentEnlargedImage } from '../../actions/carousel';
+import { initializeQuotation } from '../../actions/quotation';
 
 const EnlargedImageModal = ({
   image,
+  category,
   editingImage,
   resetCurrentEnlargedImage,
+  initializeQuotation,
   removingImage,
 }) => {
   const [height, setHeight] = useState(window.innerHeight);
@@ -32,6 +35,7 @@ const EnlargedImageModal = ({
   };
 
   const handleQuote = () => {
+    initializeQuotation(image, category);
     resetCurrentEnlargedImage();
   };
 
@@ -81,22 +85,26 @@ const EnlargedImageModal = ({
 
 EnlargedImageModal.propTypes = {
   image: PropTypes.object,
+  category: PropTypes.number,
   editingImage: PropTypes.object,
   resetCurrentEnlargedImage: PropTypes.func.isRequired,
+  initializeQuotation: PropTypes.func.isRequired,
 };
 
 EnlargedImageModal.defaultProps = {
   image: null,
+  category: 0,
   editingImage: null,
 };
 
 const mapStateToProps = state => ({
   image: state.carousel.currentEnlargedImage,
+  category: state.carousel.currentCarouselId,
   editingImage: state.carousel.editingImageData,
   removingImage: state.carousel.removingImage,
 });
 
 export default connect(
   mapStateToProps,
-  { resetCurrentEnlargedImage },
+  { resetCurrentEnlargedImage, initializeQuotation },
 )(EnlargedImageModal);

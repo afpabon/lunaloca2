@@ -1,21 +1,47 @@
+@import 'config';
+
 .quotation-nav {
-  margin-bottom: 15px;
+  margin-bottom: 2em;
   text-align: center;
 
   .dot {
-    color: black;
+    color: $main-color;
     cursor: pointer;
-    font-size: 36px;
+    font-size: 0.8em;
     line-height: 1;
-    margin: 0 15px;
+    margin: 0 0.3em;
     opacity: 0.4;
     text-shadow: none;
     transition: opacity 1s ease, text-shadow 1s ease;
     will-change: opacity, text-shadow;
   }
 
+  .inactive-dot {
+    color: #999999;
+    cursor: default;
+    font-size: 0.8em;
+    line-height: 1;
+    margin: 0 0.3em;
+    opacity: 0.4;
+    text-shadow: none;
+    transition: opacity 1s ease, text-shadow 1s ease;
+    will-change: opacity, text-shadow;
+  }
+
+  @include not-last-child('.dot') {
+    &:after {
+      content: ' >';
+    }
+  }
+
+  @include not-last-child('.inactive-dot') {
+    &:after {
+      content: ' >';
+    }
+  }
+
   .active {
-    color: var(--blue);
+    color: $highlight-color !important;
     opacity: 1;
     text-shadow: 0 0px 8px;
   }
@@ -108,4 +134,13 @@
 
 .exitLeft {
   animation-name: exitLeft;
+}
+
+.wizard-inner-container {
+  max-height: 13em;
+  overflow-y: auto;
+}
+
+.wizard-list-link {
+  cursor: pointer;
 }

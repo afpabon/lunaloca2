@@ -15,8 +15,8 @@ const Products = () => (
           </p>
           <p>Anímate a probar nuestros delicias, no te arrepentirás!</p>
         </div>
-        <div class='row m-2'>
-          <div class='col-md-6 col-sm-12 pad-sm'>
+        <div className='row m-2'>
+          <div className='col-md-6 col-sm-12 pad-sm'>
             <RemoteImage
               img='v1588177144/2524a6_82c5d6fc310e4f958fc1cafffcd35038_n2gjj3.jpg'
               cssClass='pad-sm'
@@ -26,7 +26,7 @@ const Products = () => (
               cssClass='pad-sm p-2'
             />
           </div>
-          <div class='col-md-6 col-sm-12 pad-sm'>
+          <div className='col-md-6 col-sm-12 pad-sm'>
             <div className='highlighted2-box'>
               <div className='row m-2'>
                 <div className='col-md-6 pad-sm'>

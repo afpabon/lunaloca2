@@ -6,7 +6,7 @@ const nodemailer = require('nodemailer');
 
 // @route    POST api/contact
 // @desc     Send email with contact information
-// @access   Private
+// @access   Public
 router.post(
   '/',
   [

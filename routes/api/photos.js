@@ -4,6 +4,11 @@ const router = express.Router();
 const auth = require('../../middleware/auth');
 const { multerUploads, dataUri } = require('../../middleware/multer');
 const { uploader } = require('../../config/cloudinary');
+const fs = require('fs');
+const path = require('path');
+const Handlebars = require('handlebars');
+const nodemailer = require('nodemailer');
+const config = require('config');
 
 const Photo = require('../../models/Photo');
 const { Category } = require('../../models/Category');
@@ -79,14 +84,14 @@ router.get('/category/:categoryId', async (req, res) => {
     if (id !== 99) {
       const photos = await Photo.find({
         categories: id,
-      }).select('url description');
+      }).select('url description quotable baseid');
 
       res.json(photos);
     } else {
       const existingIds = await Category.find({}).select({ publicid: 1 });
       const photos = await Photo.find({
         categories: { $nin: existingIds.map(i => i.publicid) },
-      }).select('url description');
+      }).select('url description quotable baseid');
 
       res.json(photos);
     }
@@ -188,7 +193,7 @@ router.put('/', [auth], async (req, res) => {
 // @route    GET api/photos/:id
 // @desc     Get photo by id
 // @access   Private
-router.get('/:id', [auth], async (req, res) => {
+router.get('/:id', auth, async (req, res) => {
   try {
     const photo = await Photo.findById(req.params.id);
 
@@ -242,6 +247,83 @@ router.delete('/:id', auth, async (req, res) => {
   } catch (err) {
     console.error(err.message);
 
+    res.status(500).send('Server Error');
+  }
+});
+
+// @route    POST api/photos/sendquotation
+// @desc     Send email with quotation information
+// @access   Public
+router.post('/sendquotation', async (req, res) => {
+  try {
+    const { photoInfo, contact, size, elements } = req.body;
+
+    const transporter = nodemailer.createTransport({
+      service: config.get('emailService'),
+      auth: {
+        user: config.get('emailUser'),
+        pass: config.get('emailPassword'),
+      },
+    });
+
+    const getSelectedElement = element =>
+      _.find(_.get(element, 'options'), o => o.id === element.selected);
+
+    const details = _.map(
+      elements,
+      element =>
+        `${_.get(element, 'element')}: ${_.get(
+          getSelectedElement(element),
+          'name',
+        )} (${_.get(getSelectedElement(element), 'price')})`,
+    ).join(' / ');
+
+    const total = _.reduce(
+      elements,
+      (sum, element) => sum + _.get(getSelectedElement(element), 'price', 0),
+      0,
+    );
+
+    const locals = {
+      name: _.get(contact, 'name'),
+      phone: _.get(contact, 'phone'),
+      email: _.get(contact, 'email'),
+      address: _.get(contact, 'address'),
+      neighborhood: _.get(contact, 'neighborhood'),
+      expectedDate: _.get(contact, 'expectedDate'),
+      notes: _.get(contact, 'notes'),
+      photoUrl: `${config.get('cloudinaryUrlPrefix')}/h_300/${_.get(
+        photoInfo,
+        'url',
+      )}}`,
+      photoDescription: _.get(photoInfo, 'description'),
+      size,
+      details,
+      total,
+    };
+
+    const source = fs.readFileSync(
+      path.join(__dirname, '../../templates/quotation.hbs'),
+      'utf8',
+    );
+    const template = Handlebars.compile(source);
+
+    const mailOptions = {
+      from: config.get('emailUser'),
+      to: config.get('emailUser'),
+      subject: 'Cotización Lunaloca',
+      html: template(locals),
+    };
+
+    const { error, info } = await transporter.sendMail(mailOptions);
+    if (error) {
+      console.log(error);
+      res.status(500).send('Server Error');
+    } else {
+      res.json({ status: true, message: 'Email sent' });
+    }
+  } catch (err) {
+    console.error(err.message);
     res.status(500).send('Server Error');
   }
 });

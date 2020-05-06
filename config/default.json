@@ -4,6 +4,7 @@
   "cloudinaryCloudName": "lunaloca",
   "cloudinaryApiKey": "613652533621734",
   "cloudinarySecret": "ahdH70IdYfJyMKhhYUlPqMV-YzI",
+  "cloudinaryUrlPrefix": "https://res.cloudinary.com/lunaloca/image/upload",
   "emailService": "gmail",
   "emailUser": "afpabon@gmail.com",
   "emailPassword": "T0m4$..2008"

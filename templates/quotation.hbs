@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Cotización</title>
+  </head>
+  <body>
+    <h1>Cotización de producto</h1>
+    <p>La siguiente es la información de una cotizaciñon realizada en la página
+      de Lunaloca</p>
+    <table>
+      <tr>
+        <td>Nombre</td>
+        <td>{{name}}</td>
+      </tr>
+      <tr>
+        <td>Teléfono</td>
+        <td>{{phone}}</td>
+      </tr>
+      <tr>
+        <td>Email</td>
+        <td><a href="mailto:{{email}}">{{email}}</a></td>
+      </tr>
+      <tr>
+        <td>Dirección</td>
+        <td>{{address}} ({{neighborhood}})</td>
+      </tr>
+      <tr>
+        <td>Fecha solicitada</td>
+        <td>{{expectedDate}}</td>
+      </tr>
+      <tr>
+        <td>Notas</td>
+        <td>{{notes}}</td>
+      </tr>
+      <tr>
+        <td>Producto</td>
+        <td>
+          <img src="{{photoUrl}}">
+          <p>{{photoDescription}}</p>
+        </td>
+      </tr>
+      <tr>
+        <td>Tamaño</td>
+        <td>
+          {{size}} {{units}}
+        </td>
+      </tr>
+      <tr>
+        <td>Características</td>
+        <td>{{details}}</td>
+      </tr>
+      <tr>
+        <td>Total</td>
+        <td>{{total}}</td>
+      </tr>
+    </table>
+  </body>
+</html>

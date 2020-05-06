@@ -5,14 +5,15 @@ import PropTypes from 'prop-types';
 import { getGalleryLabelById } from '../../constants/enums';
 import Carousel from '../layout/Carousel';
 
-import { getCarouselImages } from '../../actions/carousel';
+import { getCarouselImages, setCurrentCategory } from '../../actions/carousel';
 
-const Gallery = ({ getCarouselImages, carouselImages }) => {
+const Gallery = ({ getCarouselImages, setCurrentCategory, carouselImages }) => {
   const { id } = useParams();
 
   useEffect(() => {
-    getCarouselImages(id);
-  }, [getCarouselImages, id]);
+    getCarouselImages(parseInt(id));
+    setCurrentCategory(parseInt(id));
+  }, [getCarouselImages, setCurrentCategory, id]);
 
   const [width, setWidth] = useState(10);
   const div = useCallback(node => {
@@ -40,6 +41,7 @@ const Gallery = ({ getCarouselImages, carouselImages }) => {
 Gallery.propTypes = {
   carouselImages: PropTypes.array,
   getCarouselImages: PropTypes.func.isRequired,
+  setCurrentCategory: PropTypes.func.isRequired,
 };
 
 Gallery.defaultProps = {
@@ -52,5 +54,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getCarouselImages },
+  { getCarouselImages, setCurrentCategory },
 )(Gallery);

@@ -1,29 +1,39 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import RemoteImage from '../layout/RemoteImage';
+import NavigationButtons from './NavigationButtons';
 
-const FirstStep = ({}) => {
-  return (
+const FirstStep = ({ photoInfo, stepWizard }) =>
+  photoInfo && (
     <div>
       <div>
-        <h3 className='text-center'>¿Quieres comprar este producto?</h3>
+        <h3 className='text-center'>¿Te interesa este producto?</h3>
         <div className='row'>
-          <div className='col-6'>
-            <RemoteImage img={url} alt={name} />
+          <div className='col-6 text-center'>
+            <RemoteImage
+              img={photoInfo.url}
+              alt={photoInfo.description}
+              height={200}
+            />
+            <h4>{photoInfo.description}</h4>
           </div>
-          <div className='col-6'></div>
+          <div className='col-6'>
+            <p>Podemos ayudarte a estimar el costo de lo que necesitas.</p>
+            <p>
+              Siguiendo estos pasos puedes cotizar tu producto, tal como lo
+              requieres. Al terminar este proceso nos habrás brindado toda la
+              información que necesitamos para ponernos en contacto contigo y
+              cuadrar la entrega
+            </p>
+            <NavigationButtons stepWizard={stepWizard} />
+          </div>
         </div>
-
-        <label>First Name</label>
-        <input
-          type='text'
-          className='form-control'
-          name='firstname'
-          placeholder='First Name'
-          onChange={update}
-        />
       </div>
     </div>
   );
-};
 
-export default FirstStep;
+const mapStateToProps = state => ({
+  photoInfo: state.quotation.photoInfo,
+});
+
+export default connect(mapStateToProps)(FirstStep);

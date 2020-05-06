@@ -17,6 +17,7 @@
     "react": "^16.13.1",
     "react-bootstrap": "^1.0.1",
     "react-bootstrap-typeahead": "^4.2.2",
+    "react-datepicker": "^2.14.1",
     "react-dom": "^16.13.1",
     "react-dropzone": "^11.0.1",
     "react-lazy-load-image-component": "^1.4.3",

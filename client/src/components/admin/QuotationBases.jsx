@@ -38,7 +38,7 @@ const QuotationBases = ({
   }, [loadCategories]);
 
   useEffect(() => {
-    if (category) loadElements(category._id);
+    if (category) loadElements(category.publicid);
   }, [loadElements, category]);
 
   useEffect(() => {

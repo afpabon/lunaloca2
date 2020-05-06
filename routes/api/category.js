@@ -56,6 +56,7 @@ router.get('/elements/:publicid', async (req, res) => {
     res.json({
       elements: _.sortBy(category.elements, 'index'),
       sizes: category.validsizes,
+      units: category.units,
     });
   } catch (err) {
     console.error(err.message);

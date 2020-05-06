@@ -4,6 +4,7 @@ import main from './main';
 import categories from './categories';
 import quotationBases from './quotationBases';
 import carousel from './carousel';
+import quotation from './quotation';
 import loadingStatus from './loadingStatus';
 
 export default combineReducers({
@@ -12,5 +13,6 @@ export default combineReducers({
   categories,
   quotationBases,
   carousel,
+  quotation,
   loadingStatus,
 });

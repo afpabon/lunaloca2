@@ -1,7 +1,6 @@
 const _ = require('lodash');
 const express = require('express');
 const router = express.Router();
-const { check, validationResult } = require('express-validator');
 const auth = require('../../middleware/auth');
 const { multerUploads, dataUri } = require('../../middleware/multer');
 const { uploader } = require('../../config/cloudinary');
@@ -34,7 +33,7 @@ router.get('/:publicid/:size/:previousIndex', async (req, res) => {
       element: nextElement._id,
     })
       .sort({ name: 1 })
-      .select({ name: 1, description: 1, quotationbysizes: 1 });
+      .select({ name: 1, description: 1, quotationbysizes: 1, url: 1 });
     const size = parseInt(req.params.size);
     const validquotationbases = _.filter(
       quotationbases,
@@ -45,6 +44,7 @@ router.get('/:publicid/:size/:previousIndex', async (req, res) => {
       index: nextElement.index,
       element: nextElement.name,
       options: _.map(validquotationbases, qb => ({
+        id: qb._id,
         name: qb.name,
         description: qb.description,
         price: _.get(
@@ -52,7 +52,9 @@ router.get('/:publicid/:size/:previousIndex', async (req, res) => {
           'price',
           null,
         ),
+        url: qb.url,
       })),
+      required: nextElement.required,
     });
   } catch (err) {
     console.error(err.message);

@@ -2,6 +2,7 @@ import Swal from 'sweetalert2';
 import axios from 'axios';
 import {
   GET_MAIN_CAROUSEL_IMAGES,
+  SET_CURRENT_CATEGORY,
   GET_CAROUSEL_IMAGES,
   RESET_CURRENT_ENLARGED_IMAGE,
   SET_CURRENT_ENLARGED_IMAGE,
@@ -32,6 +33,13 @@ export const getMainCarouselImages = () => async dispatch => {
   dispatch({
     type: GET_MAIN_CAROUSEL_IMAGES,
     payload: res.data,
+  });
+};
+
+export const setCurrentCategory = category => dispatch => {
+  dispatch({
+    type: SET_CURRENT_CATEGORY,
+    payload: category,
   });
 };
 

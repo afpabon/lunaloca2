@@ -41,6 +41,9 @@
   &-highlight {
     color: $highlight-color;
   }
+  &-noteworthy {
+    color: $noteworthy-color;
+  }
 }
 
 // Buttons
@@ -60,7 +63,7 @@
   &.btn-highlight {
     @include set-background($highlight-color);
     &:hover {
-      background: lighten($highlight-color, 5%);
+      background: lighten($highlight-color, 10%);
     }
   }
 

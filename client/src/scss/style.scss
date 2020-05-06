@@ -97,6 +97,13 @@ ul {
   }
 }
 
+.list-group {
+  .active {
+    background-color: $highlight-color !important;
+    border-color: $highlight-color !important;
+  }
+}
+
 .dropdown {
   &-main {
     background-color: $main-color;
@@ -346,4 +353,13 @@ ul {
 
 .hiddenRow {
   padding: 0 !important;
+}
+
+.react-datepicker-wrapper {
+  width: 100% !important;
+  input {
+    padding: 0.375rem 0.75rem !important;
+    width: 100% !important;
+    font-size: 1rem !important;
+  }
 }

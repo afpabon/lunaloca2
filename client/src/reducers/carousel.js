@@ -1,5 +1,6 @@
 import {
   GET_CAROUSEL_IMAGES,
+  SET_CURRENT_CATEGORY,
   GET_MAIN_CAROUSEL_IMAGES,
   RESET_CURRENT_ENLARGED_IMAGE,
   SET_CURRENT_ENLARGED_IMAGE,
@@ -16,6 +17,7 @@ import {
 const initialState = {
   mainCarousel: [],
   currentCarousel: [],
+  currentCarouselId: 0,
   decorations: [],
   currentEnlargedImage: null,
   editingImage: null,
@@ -31,6 +33,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         mainCarousel: [...payload],
+      };
+    case SET_CURRENT_CATEGORY:
+      return {
+        ...state,
+        currentCarouselId: payload,
       };
     case GET_CAROUSEL_IMAGES:
       return {

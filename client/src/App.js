@@ -8,6 +8,7 @@ import MainNavbar from './components/layout/MainNavbar';
 import Footer from './components/layout/Footer';
 import EnlargedImageModal from './components/layout/EnlargedImageModal';
 import EditImageModal from './components/image/EditImageModal';
+import QuotationModal from './components/quotation/QuotationModal';
 
 // Admin
 import Categories from './components/admin/Categories';
@@ -82,6 +83,7 @@ const App = () => {
       <MainLoadingOverlay>
         <EnlargedImageModal />
         <EditImageModal />
+        <QuotationModal />
         <Router>
           <div className='main-container'>
             <Switch>

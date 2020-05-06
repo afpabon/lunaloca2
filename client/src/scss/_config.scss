@@ -23,3 +23,9 @@ $danger-color: #da3848;
   background-color: $color;
   color: set-text-color($color);
 }
+
+@mixin not-last-child($selector) {
+  & #{$selector}:not(:last-child) {
+    @content;
+  }
+}
