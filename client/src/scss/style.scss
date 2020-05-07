@@ -64,6 +64,9 @@ a.dark {
     color: lighten($main-color, 30%);
     text-decoration: underline;
   }
+  &.active {
+    color: $highlight-color;
+  }
 }
 
 ul {

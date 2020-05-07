@@ -13,6 +13,9 @@ import QuotationModal from './components/quotation/QuotationModal';
 // Admin
 import Categories from './components/admin/Categories';
 import QuotationBases from './components/admin/QuotationBases';
+import PrivateRoute from './components/main/PrivateRoute';
+import Register from './components/main/Register';
+import Login from './components/main/Login';
 
 // Pages
 import FrontPage from './components/main/FrontPage';
@@ -29,8 +32,6 @@ import Glase from './components/glossary/Glase';
 import Gallery from './components/gallery/Gallery';
 import ContactUs from './components/contact/ContactUs';
 import AboutUs from './components/about/AboutUs';
-import Register from './components/main/Register';
-import Login from './components/main/Login';
 
 // Redux
 import { Provider } from 'react-redux';
@@ -46,34 +47,6 @@ if (localStorage.token) {
   setAuthToken(localStorage.token);
 }
 
-const UserPage = ({ match }) => (
-  <>
-    <Header />
-    <div className='content'>
-      <MainNavbar />
-      <Switch>
-        <Route exact path='/products' component={Products} />
-        <Route exact path='/products/cupcakes' component={Cupcakes} />
-        <Route exact path='/products/cakes' component={Cakes} />
-        <Route exact path='/products/pies' component={Pies} />
-        <Route exact path='/products/cookies' component={Cookies} />
-        <Route exact path='/products/pops' component={Pops} />
-        <Route exact path='/products/others' component={Others} />
-        <Route exact path='/glossary/fondant' component={Fondant} />
-        <Route exact path='/glossary/ganache' component={Ganache} />
-        <Route exact path='/glossary/glase' component={Glase} />
-        <Route path='/gallery/:id' component={Gallery} />
-        <Route exact path='/contact' component={ContactUs} />
-        <Route exact path='/about' component={AboutUs} />
-        <Route exact path='/login' component={Login} />
-        <Route exact path='/register' component={Register} />
-        <Route exact path='/' component={FrontPage} />
-      </Switch>
-    </div>
-    <Footer />
-  </>
-);
-
 const App = () => {
   useEffect(() => {
     store.dispatch(loadUser());
@@ -86,15 +59,39 @@ const App = () => {
         <QuotationModal />
         <Router>
           <div className='main-container'>
-            <Switch>
-              <Route exact path='/admin/categories' component={Categories} />
-              <Route
-                exact
-                path='/admin/quotationbases'
-                component={QuotationBases}
-              />
-              <Route path='/' component={UserPage} />
-            </Switch>
+            <Header />
+            <div className='content'>
+              <MainNavbar />
+              <Switch>
+                <PrivateRoute
+                  exact
+                  path='/admin/categories'
+                  component={Categories}
+                />
+                <PrivateRoute
+                  exact
+                  path='/admin/quotationbases'
+                  component={QuotationBases}
+                />
+                <Route exact path='/login' component={Login} />
+                <Route exact path='/register' component={Register} />
+                <Route exact path='/products' component={Products} />
+                <Route exact path='/products/cupcakes' component={Cupcakes} />
+                <Route exact path='/products/cakes' component={Cakes} />
+                <Route exact path='/products/pies' component={Pies} />
+                <Route exact path='/products/cookies' component={Cookies} />
+                <Route exact path='/products/pops' component={Pops} />
+                <Route exact path='/products/others' component={Others} />
+                <Route exact path='/glossary/fondant' component={Fondant} />
+                <Route exact path='/glossary/ganache' component={Ganache} />
+                <Route exact path='/glossary/glase' component={Glase} />
+                <Route path='/gallery/:id' component={Gallery} />
+                <Route exact path='/contact' component={ContactUs} />
+                <Route exact path='/about' component={AboutUs} />
+                <Route path='/' component={FrontPage} />
+              </Switch>
+            </div>
+            <Footer />
           </div>
         </Router>
       </MainLoadingOverlay>

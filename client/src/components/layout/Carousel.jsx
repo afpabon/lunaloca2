@@ -134,19 +134,6 @@ const Carousel = ({
 
   return (
     <div ref={div}>
-      {isAdmin && (
-        <div className='row'>
-          <a
-            href='#!'
-            onClick={() => triggerEditImage(null, category)}
-            title='agregar'
-            style={{ marginLeft: '1em' }}
-          >
-            <i className='fas fa-images' />
-            Agregar
-          </a>
-        </div>
-      )}
       <Slider {...settings}>
         {images.map(image => (
           <div
