@@ -119,10 +119,10 @@ router.get('/starred', async (req, res) => {
   }
 });
 
-// @route    GET api/photos/:term
+// @route    GET api/photos/search/:term
 // @desc     Search photos by term
 // @access   Public
-router.get('/:term', async (req, res) => {
+router.get('/search/:term', async (req, res) => {
   try {
     const regex = new RegExp(req.params.term, 'i');
 

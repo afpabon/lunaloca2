@@ -181,7 +181,7 @@ export const deleteImage = image => async dispatch => {
 };
 
 export const searchImages = term => async dispatch => {
-  const res = await axios.get(`/api/photos/${term}`);
+  const res = await axios.get(`/api/photos/search/${term}`);
 
   dispatch({
     type: SEARCH_IMAGES,

@@ -62,6 +62,7 @@ const Carousel = ({
   setLoadingStatus,
   preventResponsive,
   vertical,
+  category,
 }) => {
   const [width, setWidth] = useState(1);
   const div = useCallback(node => {
@@ -91,8 +92,6 @@ const Carousel = ({
     pauseOnHover: true,
     verticalSwiping: vertical,
   };
-
-  console.log(settings);
 
   const removeRequested = image => {
     setRemovingImage(true);
@@ -140,6 +139,19 @@ const Carousel = ({
 
   return (
     <div ref={div}>
+      {isAdmin && (
+        <div className='row'>
+          <a
+            href='#!'
+            onClick={() => triggerEditImage(null, category)}
+            title='agregar'
+            style={{ marginLeft: '1em' }}
+          >
+            <i className='fas fa-images' />
+            Agregar
+          </a>
+        </div>
+      )}
       <Slider {...settings}>
         {images.map(image => (
           <div
@@ -217,6 +229,7 @@ Carousel.propTypes = {
   setLoadingStatus: PropTypes.func.isRequired,
   preventResponsive: PropTypes.bool,
   vertical: PropTypes.bool,
+  category: PropTypes.number,
 };
 
 Carousel.defaultProps = {
@@ -233,6 +246,7 @@ Carousel.defaultProps = {
   maxHeight: null,
   preventResponsive: false,
   vertical: false,
+  category: null,
 };
 
 const mapStateToProps = state => ({
