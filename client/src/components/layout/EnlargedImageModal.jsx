@@ -39,10 +39,12 @@ const EnlargedImageModal = ({
     resetCurrentEnlargedImage();
   };
 
-  const offset =
+  const heightOffset =
     100 +
     (image && image.description ? 30 : 0) +
     (image && image.tags ? 16 : 0);
+
+  const widthOffset = 50;
 
   return (
     <Modal
@@ -59,7 +61,8 @@ const EnlargedImageModal = ({
                 img={image.url}
                 alt={image.description}
                 fluid={false}
-                height={height - offset}
+                height={height - heightOffset}
+                width={width - widthOffset}
               />
               <h4>{image.description}</h4>
               {image.tags && <p>{image.tags.join(', ')}</p>}

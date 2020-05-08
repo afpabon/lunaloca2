@@ -60,7 +60,7 @@ const Carousel = ({
   deleteImage,
   setRemovingImage,
   setLoadingStatus,
-  category,
+  preventResponsive,
 }) => {
   const [width, setWidth] = useState(1);
   const div = useCallback(node => {
@@ -123,7 +123,7 @@ const Carousel = ({
     settings.speed = 500;
   }
 
-  if (!singleSlide) {
+  if (!singleSlide && !preventResponsive) {
     settings.responsive = generateResponsive(
       settings,
       maxWidth * (slidesToShow - 1),
@@ -209,7 +209,7 @@ Carousel.propTypes = {
   deleteImage: PropTypes.func.isRequired,
   setRemovingImage: PropTypes.func.isRequired,
   setLoadingStatus: PropTypes.func.isRequired,
-  category: PropTypes.number,
+  preventResponsive: PropTypes.bool,
 };
 
 Carousel.defaultProps = {
@@ -224,7 +224,7 @@ Carousel.defaultProps = {
   showArrows: true,
   maxWidth: 600,
   maxHeight: null,
-  category: null,
+  preventResponsive: false,
 };
 
 const mapStateToProps = state => ({

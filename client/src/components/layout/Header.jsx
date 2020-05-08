@@ -9,6 +9,9 @@ import UserLogin from './UserLogin';
 import { isAdminRoute } from '../../utils/routes';
 import { getMainCarouselImages } from '../../actions/carousel';
 
+const BORDER_SIZE = 30;
+const NORMAL_MAX_DIMENSION = 245;
+
 const Header = ({ getMainCarouselImages, mainCarouselImages }) => {
   useEffect(() => {
     getMainCarouselImages();
@@ -16,6 +19,10 @@ const Header = ({ getMainCarouselImages, mainCarouselImages }) => {
 
   const location = useLocation();
   const isAdminSection = isAdminRoute(location.pathname);
+
+  const dimension = Math.floor(
+    Math.min(NORMAL_MAX_DIMENSION, (window.innerWidth - BORDER_SIZE) / 2),
+  );
 
   return (
     <>
@@ -48,12 +55,12 @@ const Header = ({ getMainCarouselImages, mainCarouselImages }) => {
         <div className='col-md-12 tuck-under-title'>
           <Carousel
             images={mainCarouselImages}
-            lazy
             autoplay
             showDots={false}
             showArrows={false}
-            maxHeight={245}
-            maxWidth={245}
+            maxHeight={dimension}
+            maxWidth={dimension}
+            preventResponsive={window.innerWidth < 400}
           />
         </div>
       )}

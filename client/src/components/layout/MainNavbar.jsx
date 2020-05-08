@@ -17,6 +17,9 @@ const MainNavbar = ({ categories, loadCategories }) => {
 
   return (
     <Navbar bg='main' expand='lg' variant='main'>
+      <Navbar.Toggle>
+        <i className='fas fa-grip-lines toggle-dark'></i>
+      </Navbar.Toggle>
       <Navbar.Collapse id='navbarText'>
         <Nav className='nav-fill w-100' as='ul'>
           <Nav.Item as='li' className={pathname === '/' ? 'active' : ''}>

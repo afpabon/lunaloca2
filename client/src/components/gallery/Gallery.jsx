@@ -7,6 +7,9 @@ import Carousel from '../layout/Carousel';
 
 import { getCarouselImages, setCurrentCategory } from '../../actions/carousel';
 
+const BORDER_SIZE = 100;
+const NORMAL_MAX_DIMENSION = 300;
+
 const Gallery = ({ getCarouselImages, setCurrentCategory, carouselImages }) => {
   const { id } = useParams();
 
@@ -15,10 +18,14 @@ const Gallery = ({ getCarouselImages, setCurrentCategory, carouselImages }) => {
     setCurrentCategory(parseInt(id));
   }, [getCarouselImages, setCurrentCategory, id]);
 
-  const [width, setWidth] = useState(10);
+  const [dimension, setDimension] = useState(10);
   const div = useCallback(node => {
     if (node !== null) {
-      setWidth(node.offsetWidth);
+      setDimension(
+        Math.floor(
+          Math.min(NORMAL_MAX_DIMENSION, (node.offsetWidth - BORDER_SIZE) / 2),
+        ),
+      );
     }
   }, []);
 
@@ -29,9 +36,10 @@ const Gallery = ({ getCarouselImages, setCurrentCategory, carouselImages }) => {
         <Carousel
           images={carouselImages}
           lazy
-          maxWidth={Math.min(Math.floor(width / 3), 300)}
-          maxHeight={300}
+          maxWidth={dimension}
+          maxHeight={dimension}
           category={parseInt(id)}
+          showDots={dimension > 200}
         />
       </div>
     </div>

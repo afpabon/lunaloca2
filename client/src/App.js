@@ -58,10 +58,11 @@ const App = () => {
         <EditImageModal />
         <QuotationModal />
         <Router>
+          {window.innerWidth < 768 && <MainNavbar />}
           <div className='main-container'>
             <Header />
+            {window.innerWidth >= 768 && <MainNavbar />}
             <div className='content'>
-              <MainNavbar />
               <Switch>
                 <PrivateRoute
                   exact
