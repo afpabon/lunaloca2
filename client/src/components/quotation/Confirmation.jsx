@@ -24,7 +24,7 @@ const Confirmation = ({
   const total = getTotal(elements);
 
   return (
-    <div>
+    <div className='quotation-container'>
       <div>
         <div className='row'>
           <div className='col-md-6 col-xs-12'>

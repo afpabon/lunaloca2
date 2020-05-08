@@ -43,7 +43,7 @@ const Contact = ({
   };
 
   return (
-    <div>
+    <div className='quotation-container'>
       <div>
         <p>
           Por favor cuéntanos cómo podemos contactarte, y para cuando necesitas

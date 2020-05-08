@@ -16,7 +16,7 @@ const Size = ({
 }) => {
   const [selectedSize, setSelectedSize] = useState(size);
   return (
-    <div>
+    <div className='quotation-container'>
       <div>
         <h3 className='text-center'>¿Cuánto necesitas?</h3>
         <div className='row'>

@@ -40,7 +40,7 @@ const Gallery = ({ getCarouselImages, setCurrentCategory, carouselImages }) => {
       }
     }
   }, []);
-  console.log(dimension, vertical);
+
   return (
     <div className='col-md-12 bg-light'>
       <h2>{getGalleryLabelById(parseInt(id))}.</h2>

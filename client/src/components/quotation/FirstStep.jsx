@@ -5,7 +5,7 @@ import NavigationButtons from './NavigationButtons';
 
 const FirstStep = ({ photoInfo, stepWizard }) =>
   photoInfo && (
-    <div>
+    <div className='quotation-container'>
       <div>
         <h3 className='text-center'>¿Te interesa este producto?</h3>
         <div className='row'>

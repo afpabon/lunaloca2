@@ -94,7 +94,7 @@ const Quotation = ({
   };
 
   return (
-    <div className='container'>
+    <div className='container quotation-wrapper'>
       <div className={'jumbotron'}>
         <div className='row'>
           <div className='col-md-12 col-sm-6 offset-sm-3}'>

@@ -26,7 +26,7 @@ const Element = ({
   const options = _.get(element, 'options');
   const selectedOption = _.find(options, o => o.id === selectedId);
   return (
-    <div>
+    <div className='quotation-container'>
       <h3 className='text-center'>Selecciona la opción que más te guste</h3>
       <div className='row'>
         <div className='col-md-6 col-xs-12'>

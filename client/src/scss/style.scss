@@ -170,6 +170,7 @@ ul {
   border-image: url('../img/envelope-border.png') 25 round;
   box-sizing: border-box;
   position: relative;
+  float: right;
   min-height: 9em;
 
   .content {
@@ -181,7 +182,6 @@ ul {
     bottom: -10px;
     color: $main-color;
     padding: 1em;
-    height: 100%;
 
     &::before {
       position: absolute;
@@ -418,9 +418,7 @@ ul {
   }
 
   .contact-box {
-    min-height: 200px;
-    margin-left: 20px;
-    margin-right: 20px;
+    min-height: 150px;
   }
 
   [class^='col'] {
@@ -433,6 +431,22 @@ ul {
 
   .container {
     padding: 0;
+  }
+
+  .quotation-container {
+    max-height: 60vh;
+    overflow-y: auto;
+  }
+  .quotation-wrapper {
+    max-height: 90vh;
+
+    .jumbotron {
+      max-height: 90vh;
+    }
+  }
+
+  .contact-box {
+    clear: both;
   }
 }
 
