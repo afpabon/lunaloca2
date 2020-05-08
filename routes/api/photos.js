@@ -119,6 +119,30 @@ router.get('/starred', async (req, res) => {
   }
 });
 
+// @route    GET api/photos/:term
+// @desc     Search photos by term
+// @access   Public
+router.get('/:term', async (req, res) => {
+  try {
+    const regex = new RegExp(req.params.term, 'i');
+
+    const photos = await Photo.find({
+      $or: [
+        {
+          tags: regex,
+        },
+        { description: regex },
+      ],
+    }).select('-starred');
+
+    res.json(photos);
+  } catch (err) {
+    console.error(err.message);
+
+    res.status(500).send('Server Error');
+  }
+});
+
 // @route    POST api/photos
 // @desc     Create and upload a photo
 // @access   Private

@@ -14,6 +14,7 @@ import {
   SAVE_IMAGE,
   SET_REMOVING_IMAGE,
   REMOVE_IMAGE,
+  SEARCH_IMAGES,
 } from './types';
 
 export const loadDecorationQuotationBases = categories => async dispatch => {
@@ -177,4 +178,13 @@ export const deleteImage = image => async dispatch => {
       'danger',
     );
   }
+};
+
+export const searchImages = term => async dispatch => {
+  const res = await axios.get(`/api/photos/${term}`);
+
+  dispatch({
+    type: SEARCH_IMAGES,
+    payload: { result: res.data, term },
+  });
 };

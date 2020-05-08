@@ -12,17 +12,20 @@ import {
   UPDATE_IMAGE_DATA,
   REMOVE_IMAGE,
   SET_REMOVING_IMAGE,
+  SEARCH_IMAGES,
 } from '../actions/types';
 
 const initialState = {
   mainCarousel: [],
   currentCarousel: [],
+  searchedImages: [],
   currentCarouselId: 0,
   decorations: [],
   currentEnlargedImage: null,
   editingImage: null,
   editingImageData: null,
   removingImage: false,
+  searchedTerm: '',
 };
 
 export default (state = initialState, action) => {
@@ -53,6 +56,12 @@ export default (state = initialState, action) => {
       return {
         ...state,
         currentEnlargedImage: action.payload,
+      };
+    case SEARCH_IMAGES:
+      return {
+        ...state,
+        searchedImages: action.payload.result,
+        searchedTerm: action.payload.term,
       };
     case LOAD_DECORATION_QUOTATION_BASES:
       return {

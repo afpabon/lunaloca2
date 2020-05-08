@@ -32,6 +32,7 @@ import Glase from './components/glossary/Glase';
 import Gallery from './components/gallery/Gallery';
 import ContactUs from './components/contact/ContactUs';
 import AboutUs from './components/about/AboutUs';
+import SearchResults from './components/gallery/SearchResults';
 
 // Redux
 import { Provider } from 'react-redux';
@@ -89,6 +90,7 @@ const App = () => {
                 <Route path='/gallery/:id' component={Gallery} />
                 <Route exact path='/contact' component={ContactUs} />
                 <Route exact path='/about' component={AboutUs} />
+                <Route exact path='/search-results' component={SearchResults} />
                 <Route path='/' component={FrontPage} />
               </Switch>
             </div>

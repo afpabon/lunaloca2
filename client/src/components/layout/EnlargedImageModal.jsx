@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -69,13 +70,15 @@ const EnlargedImageModal = ({
             </div>
           </Modal.Body>
           <Modal.Footer>
-            <Button
-              variant='secondary'
-              className='btn-highlight'
-              onClick={handleQuote}
-            >
-              Cotizar
-            </Button>
+            {_.get(image, 'quotable', true) && (
+              <Button
+                variant='secondary'
+                className='btn-highlight'
+                onClick={handleQuote}
+              >
+                Cotizar
+              </Button>
+            )}
             <Button variant='secondary' onClick={handleClose}>
               Cerrar
             </Button>
