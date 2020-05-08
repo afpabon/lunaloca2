@@ -50,7 +50,7 @@ const Contact = ({
           el producto.
         </p>
         <div className='row'>
-          <div className='col-6 col-xs-12'>
+          <div className='col-md-6 col-xs-12'>
             <div className='form-group'>
               <input
                 type='text'
@@ -131,7 +131,7 @@ const Contact = ({
               />
             </div>{' '}
           </div>
-          <div className='col-6 col-xs-12'>
+          <div className='col-md-6 col-xs-12'>
             <h4>Resumen de tu producto</h4>
             <p className='strong'>{_.get(photoInfo, 'description')}</p>
             <ListGroup key={uuid()}>

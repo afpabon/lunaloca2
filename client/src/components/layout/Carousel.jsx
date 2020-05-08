@@ -61,6 +61,7 @@ const Carousel = ({
   setRemovingImage,
   setLoadingStatus,
   preventResponsive,
+  vertical,
 }) => {
   const [width, setWidth] = useState(1);
   const div = useCallback(node => {
@@ -86,7 +87,12 @@ const Carousel = ({
     autoplay,
     fade: fade && singleSlide,
     adaptiveHeight: true,
+    vertical,
+    pauseOnHover: true,
+    verticalSwiping: vertical,
   };
+
+  console.log(settings);
 
   const removeRequested = image => {
     setRemovingImage(true);
@@ -210,6 +216,7 @@ Carousel.propTypes = {
   setRemovingImage: PropTypes.func.isRequired,
   setLoadingStatus: PropTypes.func.isRequired,
   preventResponsive: PropTypes.bool,
+  vertical: PropTypes.bool,
 };
 
 Carousel.defaultProps = {
@@ -225,6 +232,7 @@ Carousel.defaultProps = {
   maxWidth: 600,
   maxHeight: null,
   preventResponsive: false,
+  vertical: false,
 };
 
 const mapStateToProps = state => ({

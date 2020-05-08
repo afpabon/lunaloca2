@@ -27,7 +27,7 @@ const Confirmation = ({
     <div>
       <div>
         <div className='row'>
-          <div className='col-md-6'>
+          <div className='col-md-6 col-xs-12'>
             <Card>
               <Card.Body>
                 <Card.Title>Confirma tu producto</Card.Title>
@@ -60,7 +60,7 @@ const Confirmation = ({
             </Card>
           </div>
           {photoInfo && (
-            <div className='col-md-6 text-center'>
+            <div className='col-md-6 col-xs-12 text-center'>
               <RemoteImage
                 img={photoInfo.url}
                 alt={photoInfo.description}

@@ -29,7 +29,7 @@ const Element = ({
     <div>
       <h3 className='text-center'>Selecciona la opción que más te guste</h3>
       <div className='row'>
-        <div className='col-md-6'>
+        <div className='col-md-6 col-xs-12'>
           <div className='wizard-inner-container'>
             <ul className='list-group'>
               {!element.required && (
@@ -64,7 +64,7 @@ const Element = ({
             </ul>
           </div>
         </div>
-        <div className='col-md-6'>
+        <div className='col-md-6 col-xs-12'>
           {_.get(selectedOption, 'url') && (
             <RemoteImage
               img={_.get(selectedOption, 'url')}
@@ -75,10 +75,10 @@ const Element = ({
         </div>
       </div>
       <div className='row pt-4'>
-        <div className='col-md-6'>
+        <div className='col-md-6 col-xs-12'>
           <p>{_.get(selectedOption, 'description')}</p>
         </div>
-        <div className='col-md-6'>
+        <div className='col-md-6 col-xs-12'>
           <NavigationButtons stepWizard={stepWizard} />
         </div>
       </div>

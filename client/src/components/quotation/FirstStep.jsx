@@ -9,7 +9,7 @@ const FirstStep = ({ photoInfo, stepWizard }) =>
       <div>
         <h3 className='text-center'>¿Te interesa este producto?</h3>
         <div className='row'>
-          <div className='col-6 text-center'>
+          <div className='col-md-6 col-xs-12 text-center'>
             <RemoteImage
               img={photoInfo.url}
               alt={photoInfo.description}
@@ -17,7 +17,7 @@ const FirstStep = ({ photoInfo, stepWizard }) =>
             />
             <h4>{photoInfo.description}</h4>
           </div>
-          <div className='col-6'>
+          <div className='col-md-6 col-xs-12'>
             <p>Podemos ayudarte a estimar el costo de lo que necesitas.</p>
             <p>
               Siguiendo estos pasos puedes cotizar tu producto, tal como lo

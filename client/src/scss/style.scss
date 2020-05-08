@@ -422,9 +422,21 @@ ul {
     margin-left: 20px;
     margin-right: 20px;
   }
+
+  [class^='col'] {
+    padding: 0 !important;
+  }
+
+  .row {
+    margin: 0;
+  }
+
+  .container {
+    padding: 0;
+  }
 }
 
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 1200px) and (min-width: 768px) {
   .main-container {
     grid-gap: 0.4rem;
     margin: 0 3rem;
