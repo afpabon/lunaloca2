@@ -41,7 +41,7 @@ const EnlargedImageModal = ({
   };
 
   const heightOffset =
-    100 +
+    120 +
     (image && image.description ? 30 : 0) +
     (image && image.tags ? 16 : 0);
 

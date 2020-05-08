@@ -1,6 +1,5 @@
 import { uuid } from 'uuidv4';
 import _ from 'lodash';
-import Swal from 'sweetalert2';
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -12,7 +11,7 @@ import { setCurrentEnlargedImage } from '../../actions/carousel';
 const SEARCH_IMAGE_HEIGHT = 200;
 
 const ImageResult = ({ image, term, setCurrentEnlargedImage }) => {
-  const { url, description, categories, quotable, baseid, tags } = image;
+  const { url, description, tags } = image;
   return (
     <div className='well search-result'>
       <div className='row'>

@@ -133,7 +133,7 @@ router.get('/:term', async (req, res) => {
         },
         { description: regex },
       ],
-    }).select('-starred');
+    }).select('url description tags quotable');
 
     res.json(photos);
   } catch (err) {
